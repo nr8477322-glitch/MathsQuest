@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathsQuest</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app {
+      width: 95%;
+      max-width: 500px;
+      background: white;
+      color: #222;
+      border-radius: 25px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      color: #4f46e5;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .score {
+      background: #eef2ff;
+      padding: 12px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #4f46e5;
+    }
+
+    .question {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 25px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      font-size: 20px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #4f46e5;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #3730a3;
+    }
+
+    #message {
+      min-height: 30px;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .start {
+      background: #16a34a;
+    }
+
+    .start:hover {
+      background: #15803d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <h1>🧠 MathsQuest</h1>
+    <p class="subtitle">Le jeu pour devenir un champion des maths !</p>
+
+    <div class="score">
+      ⭐ Score : <span id="score">0</span>
+    </div>
+
+    <div id="startScreen">
+      <h2>Prêt pour l'aventure ? 🚀</h2>
+      <p>Résous les calculs et gagne des points !</p>
+      <button class="start" onclick="startGame()">Commencer</button>
+    </div>
+
+    <div id="gameScreen" class="hidden">
+
+      <div class="question" id="question"></div>
+
+      <input
+        type="number"
+        id="answer"
+        placeholder="Ta réponse"
+      >
+
+      <button onclick="checkAnswer()">Valider ✅</button>
+
+      <div id="message"></div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let score = 0;
+    let number1;
+    let number2;
+    let correctAnswer;
+
+    function startGame() {
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("gameScreen").classList.remove("hidden");
+      newQuestion();
+    }
+
+    function newQuestion() {
+      number1 = Math.floor(Math.random() * 20) + 1;
+      number2 = Math.floor(Math.random() * 20) + 1;
+
+      correctAnswer = number1 + number2;
+
+      document.getElementById("question").textContent =
+        number1 + " + " + number2 + " = ?";
+
+      document.getElementById("answer").value = "";
+      document.getElementById("answer").focus();
+    }
+
+    function checkAnswer() {
+      const answer = Number(document.getElementById("answer").value);
+      const message = document.getElementById("message");
+
+      if (answer === correctAnswer) {
+        score += 10;
+        document.getElementById("score").textContent = score;
+
+        message.textContent = "🎉 Bravo ! Bonne réponse !";
+        message.style.color = "green";
+
+        setTimeout(newQuestion, 900);
+      } else {
+        message.textContent = "❌ Pas encore ! Essaie encore.";
+        message.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -13,68 +13,68 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      background: linear- gradient (135 deg, #4f46e5, #7c3aed);
       color: white;
-      min-height: 100vh;
+      min-height: 100 vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     .app {
-      width: 95%;
-      max-width: 500px;
+      width: 95 %;
+      max-width: 500 px;
       background: white;
       color: #222;
-      border-radius: 25px;
-      padding: 25px;
+      border-radius: 25 px;
+      padding: 25 px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 15 px 40 px rgba (0,0,0,0.3);
     }
 
     h1 {
       color: #4f46e5;
-      margin-bottom: 5px;
+      margin-bottom: 5 px;
     }
 
     .subtitle {
       color: #666;
-      margin-bottom: 25px;
+      margin-bottom: 25 px;
     }
 
     .score {
       background: #eef2ff;
-      padding: 12px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+      padding: 12 px;
+      border-radius: 15 px;
+      margin-bottom: 20 px;
       font-weight: bold;
       color: #4f46e5;
     }
 
     .question {
-      font-size: 28px;
+      font-size: 28 px;
       font-weight: bold;
-      margin: 25px 0;
+      margin: 25 px 0;
     }
 
     input {
-      width: 100%;
-      padding: 15px;
-      font-size: 20px;
-      border: 2px solid #ddd;
-      border-radius: 12px;
+      width: 100 %;
+      padding: 15 px;
+      font-size: 20 px;
+      border: 2 px solid #ddd;
+      border-radius: 12 px;
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 15 px;
     }
 
     button {
-      width: 100%;
-      padding: 15px;
+      width: 100 %;
+      padding: 15 px;
       border: none;
-      border-radius: 12px;
+      border-radius: 12 px;
       background: #4f46e5;
       color: white;
-      font-size: 18px;
+      font-size: 18 px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -84,8 +84,8 @@
     }
 
     #message {
-      min-height: 30px;
-      margin: 15px 0;
+      min-height: 30 px;
+      margin: 15 px 0;
       font-weight: bold;
     }
 
@@ -163,9 +163,9 @@
       document.getElementById("answer").focus();
     }
 
-    function checkAnswer() {
-      const answer = Number(document.getElementById("answer").value);
-      const message = document.getElementById("message");
+     functioncheckAnswer() {
+      constanswer = Number(document.getElementById("answer").value);
+      constmessage = document.getElementById("message");
 
       if (answer === correctAnswer) {
         score += 10;

@@ -139,18 +139,18 @@
   </div>
 
   <script>
-    letscore = 0;
-    letnumber1;
-    letnumber2;
-    letcorrectAnswer;
+    let score = 0;
+    let number1;
+    let number2;
+    let correctAnswer;
 
-    functionconstmessage = document.getElementById(...)startGame() {
+    function const message = document.getElementById(...)startGame() {
       document.getElementById("startScreen").classList.add("hidden");
       document.getElementById("gameScreen").classList.remove("hidden");
-      newQuestion();
+      new Question();
     }
 
-    functionnewQuestion() {
+    function new Question() {
       number1 = Math.floor(Math.random() * 20) + 1;
       number2 = Math.floor(Math.random() * 20) + 1;
 
@@ -163,7 +163,7 @@
       document.getElementById("answer").focus();
     }
 
-     functioncheckAnswer() {
+     function check Answer() {
       constanswer = Number(document.getElementById("answer").value);
       constmessage = document.getElementById("message");
 

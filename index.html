@@ -1,184 +1,175 @@
+
 <!DOCTYPE html>
-<html lang="fr">   
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>MathsQuest</title>
 
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear- gradient (135 deg, #4f46e5, #7c3aed);
-      color: white;
-      min-height: 100 vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .app {
-      width: 95 %;
-      max-width: 500 px;
-      background: white;
+      background: #f4f7fb;
       color: #222;
-      border-radius: 25 px;
-      padding: 25 px;
-      text-align: center;
-      box-shadow: 0 15 px 40 px rgba (0,0,0,0.3);
+      min-height: 100vh;
     }
 
-    h1 {
-      color: #4f46e5;
-      margin-bottom: 5 px;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 25 px;
-    }
-
-    .score {
-      background: #eef2ff;
-      padding: 12 px;
-      border-radius: 15 px;
-      margin-bottom: 20 px;
-      font-weight: bold;
-      color: #4f46e5;
-    }
-
-    .question {
-      font-size: 28 px;
-      font-weight: bold;
-      margin: 25 px 0;
-    }
-
-    input {
-      width: 100 %;
-      padding: 15 px;
-      font-size: 20 px;
-      border: 2 px solid #ddd;
-      border-radius: 12 px;
-      text-align: center;
-      margin-bottom: 15 px;
-    }
-
-    button {
-      width: 100 %;
-      padding: 15 px;
-      border: none;
-      border-radius: 12 px;
-      background: #4f46e5;
+    header {
+      background: #58cc02;
       color: white;
-      font-size: 18 px;
-      font-weight: bold;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 32px;
+    }
+
+    header p {
+      margin-top: 8px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .parrot {
+      font-size: 80px;
+      margin-bottom: 15px;
+    }
+
+    .welcome h2 {
+      color: #58cc02;
+      margin-bottom: 10px;
+    }
+
+    .classes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .class-card {
+      background: white;
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .class-card:hover {
+      transform: translateY(-3px);
+      border-color: #58cc02;
+    }
+
+    .class-card h3 {
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .class-card button {
+      background: #58cc02;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #3730a3;
-    }
-
     #message {
-      min-height: 30 px;
-      margin: 15 px 0;
+      margin-top: 25px;
       font-weight: bold;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .start {
-      background: #16a34a;
-    }
-
-    .start:hover {
-      background: #15803d;
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="app">
+  <header>
+    <h1>🦜 MathsQuest</h1>
+    <p>Apprends les mathématiques en t'amusant !</p>
+  </header>
 
-    <h1>🧠 MathsQuest</h1>
-    <p class="subtitle">Le jeu pour devenir un champion des maths !</p>
+  <main>
 
-    <div class="score">
-      ⭐ Score : <span id="score">0</span>
-    </div>
+    <section class="welcome">
+      <div class="parrot">🦜</div>
 
-    <div id="startScreen">
-      <h2>Prêt pour l'aventure ? 🚀</h2>
-      <p>Résous les calculs et gagne des points !</p>
-      <button class="start" onclick="startGame()">Commencer</button>
-    </div>
+      <h2>Bienvenue sur MathsQuest !</h2>
 
-    <div id="gameScreen" class="hidden">
+      <p>
+        Choisis ta classe et commence ton aventure mathématique.
+      </p>
 
-      <div class="question" id="question"></div>
+      <div class="classes">
 
-      <input
-        type="number"
-        id="answer"
-        placeholder="Ta réponse"
-      >
+        <div class="class-card">
+          <h3>6e</h3>
+          <button onclick="choisirClasse('6e')">Commencer</button>
+        </div>
 
-      <button onclick="checkAnswer()">Valider ✅</button>
+        <div class="class-card">
+          <h3>5e</h3>
+          <button onclick="choisirClasse('5e')">Commencer</button>
+        </div>
+
+        <div class="class-card">
+          <h3>4e</h3>
+          <button onclick="choisirClasse('4e')">Commencer</button>
+        </div>
+
+        <div class="class-card">
+          <h3>3e</h3>
+          <button onclick="choisirClasse('3e')">Commencer</button>
+        </div>
+
+        <div class="class-card">
+          <h3>2nde</h3>
+          <button onclick="choisirClasse('2nde')">Commencer</button>
+        </div>
+
+        <div class="class-card">
+          <h3>1ère</h3>
+          <button onclick="choisirClasse('1ère')">Commencer</button>
+        </div>
+
+        <div class="class-card">
+          <h3>Terminale</h3>
+          <button onclick="choisirClasse('Terminale')">Commencer</button>
+        </div>
+
+      </div>
 
       <div id="message"></div>
+    </section>
 
-    </div>
-
-  </div>
+  </main>
 
   <script>
-    let score = 0;
-    let number1;
-    let number2;
-    let correctAnswer;
-
-    function const message = document.getElementById(...)startGame() {
-      document.getElementById("startScreen").classList.add("hidden");
-      document.getElementById("gameScreen").classList.remove("hidden");
-      new Question();
-    }
-
-    function new Question() {
-      number1 = Math.floor(Math.random() * 20) + 1;
-      number2 = Math.floor(Math.random() * 20) + 1;
-
-      correctAnswer = number1 + number2;
-
-      document.getElementById("question").textContent =
-        number1 + " + " + number2 + " = ?";
-
-      document.getElementById("answer").value = "";
-      document.getElementById("answer").focus();
-    }
-
-     function check Answer() {
-      constanswer = Number(document.getElementById("answer").value);
-      constmessage = document.getElementById("message");
-
-      if (answer === correctAnswer) {
-        score += 10;
-        document.getElementById("score").textContent = score;
-
-        message.textContent = "🎉 Bravo ! Bonne réponse !";
-        message.style.color = "green";
-
-        setTimeout(newQuestion, 900);
-      } else {
-        message.textContent = "❌ Pas encore ! Essaie encore.";
-        message.style.color = "red";
-      }
+     choisirClasse(classe) {
+      document.getElementById("message").textContent =
+        "🎉 Tu as choisi la classe de " + classe + " !";
     }
   </script>
 

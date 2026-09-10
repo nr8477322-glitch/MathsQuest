@@ -167,11 +167,23 @@
   </main>
 
   <script>
-     choisirClasse(classe) {
-      document.getElementById("message").textContent =
-        "🎉 Tu as choisi la classe de " + classe + " !";
-    }
-  </script>
+
+
+function choisirClasse(classe) {
+    const message = document.getElementById("message");
+
+    message.textContent = "🎯 Tu as choisi la classe " + classe + " !";
+
+    localStorage.setItem("mathquest_classe", classe);
+
+    setTimeout(function() {
+        message.textContent = "🦜 Bienvenue dans MathQuest !";
+    }, 2000);
+}
+
+</script>
+    
+  
 
 </body>
 </html>

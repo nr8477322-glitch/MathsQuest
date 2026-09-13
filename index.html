@@ -1,809 +1,1653 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathQuest</title>
 
-  <title>MathQuest</title>
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#222;
+  min-height:100vh;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #222;
-      min-height: 100vh;
-    }
+header{
+  background:#58cc02;
+  color:white;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
 
-    header {
-      background: #58cc02;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+header h1{
+  font-size:32px;
+}
 
-    header h1 {
-      font-size: 32px;
-    }
+header p{
+  margin-top:6px;
+}
 
-    header p {
-      margin-top: 8px;
-    }
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:18px;
+}
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+.screen{
+  display:none;
+}
 
-    .screen {
-      display: none;
-    }
+.screen.active{
+  display:block;
+}
 
-    .screen.active {
-      display: block;
-    }
+.box{
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  margin-bottom:20px;
+  box-shadow:0 7px 25px rgba(0,0,0,.08);
+}
 
-    .welcome,
-    .profile-box,
-    .home-box {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+.center{
+  text-align:center;
+}
 
-    .parrot {
-      font-size: 80px;
-      margin-bottom: 15px;
-    }
+h2{
+  color:#58cc02;
+  margin-bottom:15px;
+}
 
-    h2 {
-      color: #58cc02;
-      margin-bottom: 10px;
-    }
+button{
+  background:#58cc02;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:13px 20px;
+  margin:5px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
 
-    .classes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 15px;
-      margin-top: 25px;
-    }
+button:hover{
+  background:#46a900;
+  transform:translateY(-2px);
+}
 
-    .class-card {
-      background: white;
-      border: 2px solid #ddd;
-      border-radius: 15px;
-      padding: 20px;
-      text-align: center;
-      transition: 0.2s;
-    }
+.gray{
+  background:#777;
+}
 
-    .class-card:hover {
-      transform: translateY(-3px);
-      border-color: #58cc02;
-    }
+.red{
+  background:#e53935;
+}
 
-    .class-card h3 {
-      color: #333;
-      margin-bottom: 12px;
-    }
+/* =========================
+   ACCUEIL MODERNE
+========================= */
 
-    button {
-      background: #58cc02;
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      margin: 5px;
-    }
+.home-hero{
+  background:linear-gradient(135deg,#e2f7ff,#ffffff);
+  border-radius:30px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  overflow:hidden;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
 
-    button:hover {
-      background: #46a900;
-    }
+.matho-zone{
+  flex:1;
+  text-align:center;
+  position:relative;
+}
 
-    .input-group {
-      margin: 20px 0;
-      text-align: left;
-    }
+.matho-home{
+  width:100%;
+  max-width:330px;
+  height:280px;
+  object-fit:contain;
+  animation:mathoFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 12px 10px rgba(0,0,0,.18));
+}
 
-    .input-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
+@keyframes mathoFloat{
+  0%,100%{
+    transform:translateY(0) rotate(-1deg);
+  }
+  50%{
+    transform:translateY(-12px) rotate(1deg);
+  }
+}
 
-    .input-group input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      font-size: 16px;
-    }
+.matho-bubble{
+  position:absolute;
+  right:0;
+  top:10px;
+  background:white;
+  border-radius:20px;
+  padding:13px 17px;
+  box-shadow:0 5px 18px rgba(0,0,0,.12);
+  color:#17406d;
+  font-weight:bold;
+}
 
-    .input-group input:focus {
-      outline: none;
-      border-color: #58cc02;
-    }
+.welcome-card{
+  flex:1;
+  background:white;
+  border-radius:25px;
+  padding:27px;
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
 
-    .coach-message {
-      background: #f0f9e9;
-      border-radius: 15px;
-      padding: 15px;
-      margin: 20px 0;
-      font-size: 17px;
-      line-height: 1.5;
-    }
+.welcome-card h2{
+  font-size:30px;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 25px 0;
-    }
+.welcome-name{
+  display:block;
+  color:#58cc02;
+  font-size:38px;
+  font-weight:900;
+}
 
-    .stat {
-      background: #f4f7fb;
-      border-radius: 15px;
-      padding: 15px;
-    }
+.welcome-text{
+  font-size:19px;
+  color:#23486d;
+  line-height:1.5;
+  margin:15px 0;
+}
 
-    .stat strong {
-      display: block;
-      font-size: 24px;
-      color: #58cc02;
-      margin-bottom: 5px;
-    }
+.coach-message{
+  background:#f0f9e9;
+  border-radius:17px;
+  padding:15px;
+  margin:18px 0;
+  font-size:16px;
+  line-height:1.5;
+}
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      margin-top: 25px;
-    }
+.stats-modern{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:18px 0;
+}
 
-    .feature {
-      background: #f4f7fb;
-      border-radius: 15px;
-      padding: 20px;
-      font-weight: bold;
-    }
+.stat-modern{
+  border-radius:20px;
+  padding:17px 10px;
+  text-align:center;
+  font-weight:bold;
+}
 
-    .feature span {
-      display: block;
-      font-size: 35px;
-      margin-bottom: 8px;
-    }
+.stat-modern.xp{
+  background:#fff1bd;
+  color:#c78300;
+}
 
-    .lesson {
-      background: #f4f7fb;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      line-height: 1.7;
-    }
+.stat-modern.serie{
+  background:#ffe0e5;
+  color:#df2944;
+}
 
-    .answer-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
+.stat-modern.progress{
+  background:#e5dcff;
+  color:#6339c5;
+}
 
-    #message,
-    #profileMessage,
-    #exerciseMessage {
-      margin-top: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
+.stat-icon{
+  display:block;
+  font-size:30px;
+}
 
-    .success {
-      background: #f0f9e9;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 20px;
-    }
+.stat-number{
+  display:block;
+  font-size:25px;
+  margin-top:4px;
+}
 
-    @media (max-width: 500px) {
-      .stats {
-        grid-template-columns: 1fr;
-      }
+.mission-card{
+  background:linear-gradient(135deg,#dff6ff,#eefcff);
+  border-radius:25px;
+  padding:22px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin:20px 0;
+  box-shadow:0 6px 20px rgba(0,0,0,.07);
+}
 
-      .welcome,
-      .profile-box,
-      .home-box {
-        padding: 20px;
-      }
-    }
-  </style>
+.mission-icon{
+  font-size:60px;
+}
+
+.mission-card h3{
+  color:#173b68;
+  font-size:24px;
+  margin-bottom:7px;
+}
+
+.mission-card p{
+  color:#244b75;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+.mission-button{
+  border-radius:30px;
+  padding:14px 25px;
+  box-shadow:0 4px 0 #3d9700;
+}
+
+.actions-title{
+  color:#173b68;
+  font-size:24px;
+  margin:25px 5px 15px;
+}
+
+.features-modern{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.feature-modern{
+  border-radius:22px;
+  padding:21px;
+  min-height:140px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 5px 15px rgba(0,0,0,.07);
+}
+
+.feature-modern:hover{
+  transform:translateY(-4px);
+}
+
+.feature-modern span{
+  display:block;
+  font-size:40px;
+  margin-bottom:9px;
+}
+
+.feature-modern strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.feature-modern small{
+  font-size:13px;
+}
+
+.f-blue{
+  background:#dff2ff;
+  color:#164d80;
+}
+
+.f-green{
+  background:#dff8e5;
+  color:#176b36;
+}
+
+.f-purple{
+  background:#eadfff;
+  color:#5730a5;
+}
+
+.f-yellow{
+  background:#fff0bd;
+  color:#795500;
+}
+
+.f-pink{
+  background:#ffe0e8;
+  color:#a51f40;
+}
+
+.f-cyan{
+  background:#d9f6f7;
+  color:#17656a;
+}
+
+/* =========================
+   AUTRES ÉCRANS
+========================= */
+
+.parrot{
+  font-size:70px;
+  margin-bottom:12px;
+}
+
+.classes{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:12px;
+  margin-top:20px;
+}
+
+.class-card{
+  background:#f4f7fb;
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+}
+
+.class-card h3{
+  margin-bottom:10px;
+}
+
+.class-card button{
+  width:100%;
+}
+
+.input-group{
+  margin:18px 0;
+  text-align:left;
+}
+
+.input-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.input-group input,
+textarea{
+  width:100%;
+  padding:14px;
+  border:2px solid #ddd;
+  border-radius:13px;
+  font-size:16px;
+}
+
+.input-group input:focus,
+textarea:focus{
+  outline:none;
+  border-color:#58cc02;
+}
+
+.lesson{
+  background:#f4f7fb;
+  border-radius:17px;
+  padding:20px;
+  line-height:1.7;
+  margin:20px 0;
+}
+
+.answer-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.success{
+  background:#f0f9e9;
+  border-radius:17px;
+  padding:20px;
+  line-height:1.6;
+  margin:20px 0;
+}
+
+.rewards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:15px;
+  margin:20px 0;
+}
+
+.reward{
+  background:#f4f7fb;
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+}
+
+.badge{
+  font-size:50px;
+}
+
+.locked{
+  opacity:.4;
+}
+
+.progress-bar{
+  width:100%;
+  height:25px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:#58cc02;
+  transition:.5s;
+}
+
+.profile{
+  background:#f4f7fb;
+  border-radius:17px;
+  padding:20px;
+  text-align:left;
+  line-height:2;
+}
+
+textarea{
+  min-height:150px;
+  resize:vertical;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+  main{
+    padding:12px;
+  }
+
+  .home-hero{
+    flex-direction:column;
+  }
+
+  .matho-home{
+    height:230px;
+  }
+
+  .matho-bubble{
+    right:5px;
+    top:5px;
+    font-size:13px;
+    max-width:180px;
+  }
+
+  .welcome-card{
+    width:100%;
+  }
+
+  .welcome-name{
+    font-size:32px;
+  }
+
+  .stats-modern{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .stat-modern{
+    padding:12px 5px;
+  }
+
+  .stat-icon{
+    font-size:25px;
+  }
+
+  .stat-number{
+    font-size:21px;
+  }
+
+  .mission-card{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .features-modern{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:400px){
+
+  .features-modern{
+    grid-template-columns:1fr;
+  }
+
+  .stats-modern{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h1>🦜 MathQuest</h1>
-    <p>Apprends les mathématiques en t'amusant !</p>
-  </header>
+<header>
+  <h1>🦜 MathQuest</h1>
+  <p>Apprends les mathématiques en t'amusant !</p>
+</header>
 
-  <main>
+<main>
 
-    <!-- ÉCRAN 1 : CHOIX DE LA CLASSE -->
-    <section id="classeScreen" class="screen active">
+<!-- =========================
+     CLASSE
+========================= -->
 
-      <div class="welcome">
+<section id="classeScreen" class="screen active">
 
-        <div class="parrot">🦜</div>
+<div class="box center">
 
-        <h2>Bienvenue sur MathQuest !</h2>
+<div class="parrot">🦜</div>
 
-        <p>
-          Choisis ta classe et commence ton aventure mathématique.
-        </p>
+<h2>Bienvenue sur MathQuest !</h2>
 
-        <div class="classes">
+<p>Choisis ta classe et commence ton aventure mathématique.</p>
 
-          <div class="class-card">
-            <h3>6e</h3>
-            <button onclick="choisirClasse('6e')">Commencer</button>
-          </div>
+<div class="classes">
 
-          <div class="class-card">
-            <h3>5e</h3>
-            <button onclick="choisirClasse('5e')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>6e</h3>
+<button onclick="choisirClasse('6e')">Commencer</button>
+</div>
 
-          <div class="class-card">
-            <h3>4e</h3>
-            <button onclick="choisirClasse('4e')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>5e</h3>
+<button onclick="choisirClasse('5e')">Commencer</button>
+</div>
 
-          <div class="class-card">
-            <h3>3e</h3>
-            <button onclick="choisirClasse('3e')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>4e</h3>
+<button onclick="choisirClasse('4e')">Commencer</button>
+</div>
 
-          <div class="class-card">
-            <h3>2nde</h3>
-            <button onclick="choisirClasse('2nde')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>3e</h3>
+<button onclick="choisirClasse('3e')">Commencer</button>
+</div>
 
-          <div class="class-card">
-            <h3>1ère</h3>
-            <button onclick="choisirClasse('1ère')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>2nde</h3>
+<button onclick="choisirClasse('2nde')">Commencer</button>
+</div>
 
-          <div class="class-card">
-            <h3>Terminale</h3>
-            <button onclick="choisirClasse('Terminale')">Commencer</button>
-          </div>
+<div class="class-card">
+<h3>1ère</h3>
+<button onclick="choisirClasse('1ère')">Commencer</button>
+</div>
 
-        </div>
+<div class="class-card">
+<h3>Terminale</h3>
+<button onclick="choisirClasse('Terminale')">Commencer</button>
+</div>
 
-        <div id="message"></div>
+</div>
 
-      </div>
+<p id="message"></p>
 
-    </section>
+</div>
+</section>
 
 
-    <!-- ÉCRAN 2 : CRÉATION DU PROFIL -->
-    <section id="profileScreen" class="screen">
+<!-- =========================
+     PROFIL
+========================= -->
 
-      <div class="profile-box">
+<section id="profileScreen" class="screen">
 
-        <div class="parrot">🦜</div>
+<div class="box center">
 
-        <h2>Créons ton profil !</h2>
+<div class="parrot">🦜</div>
 
-        <div class="coach-message">
-          🦜 Salut ! Je suis <strong>Matho</strong>, ton compagnon
-          MathQuest !<br><br>
-          Comment t'appelles-tu ?
-        </div>
+<h2>Créons ton profil !</h2>
 
-        <div class="input-group">
-          <label for="prenom">👤 Ton prénom</label>
-          <input
-            type="text"
-            id="prenom"
-            placeholder="Exemple : Paul"
-            autocomplete="given-name"
-          >
-        </div>
+<div class="coach-message">
+🦜 Salut ! Je suis <strong>Matho</strong>, ton compagnon MathQuest !<br><br>
+Comment t'appelles-tu ?
+</div>
 
-        <div class="input-group">
-          <label for="nom">📝 Ton nom</label>
-          <input
-            type="text"
-            id="nom"
-            placeholder="Exemple : Traoré"
-            autocomplete="family-name"
-          >
-        </div>
+<div class="input-group">
+<label>👤 Ton prénom</label>
+<input id="prenom" type="text" placeholder="Exemple : Paul">
+</div>
 
-        <button onclick="creerProfil()">
-          🚀 Créer mon profil
-        </button>
+<div class="input-group">
+<label>📝 Ton nom</label>
+<input id="nom" type="text" placeholder="Exemple : Traoré">
+</div>
 
-        <div id="profileMessage"></div>
+<button onclick="creerProfil()">
+🚀 Créer mon profil
+</button>
 
-      </div>
+<p id="profileMessage"></p>
 
-    </section>
+</div>
+</section>
 
 
-    <!-- ÉCRAN 3 : ACCUEIL MATHQUEST -->
-    <section id="homeScreen" class="screen">
+<!-- =========================
+     NOUVEL ACCUEIL
+========================= -->
 
-      <div class="home-box">
+<section id="homeScreen" class="screen">
 
-        <div class="parrot">🦜</div>
+<div class="home-hero">
 
-        <h2 id="bienvenueNom">
-          Bienvenue !
-        </h2>
+<div class="matho-zone">
 
-        <p id="classeEleve"></p>
+<img
+src="matho.png"
+alt="Matho, le perroquet de MathQuest"
+class="matho-home"
+>
 
-        <div class="coach-message">
-          🦜 <strong>Matho :</strong>
-          « Salut ! Prêt pour ta première mission ? 🚀 »
-        </div>
+<div class="matho-bubble">
+🦜 Tu peux le faire !
+</div>
 
-        <button onclick="commencerMission()">
-          🚀 Commençons !
-        </button>
+</div>
 
-        <div class="stats">
+<div class="welcome-card">
 
-          <div class="stat">
-            <strong id="xpStat">0 ⭐</strong>
-            XP
-          </div>
+<h2>Bonjour</h2>
 
-          <div class="stat">
-            <strong id="serieStat">0 🔥</strong>
-            Série
-          </div>
+<span id="bienvenueNom" class="welcome-name">
+!
+</span>
 
-          <div class="stat">
-            <strong id="progressionStat">0 %</strong>
-            Progression
-          </div>
+<p id="classeEleve"></p>
 
-        </div>
+<p class="welcome-text">
+Prêt à relever de nouveaux défis mathématiques ? 🚀
+</p>
 
-        <h3>🚀 Que veux-tu faire ?</h3>
+<div class="coach-message">
+🦜 <strong>Matho :</strong><br>
+Je suis là pour t'aider !<br>
+Ensemble, on va plus loin ! ❤️
+</div>
 
-        <div class="features">
+</div>
 
-          <div class="feature">
-            <span>📚</span>
-            Cours
-          </div>
+</div>
 
-          <div class="feature">
-            <span>🎯</span>
-            Exercices
-          </div>
 
-          <div class="feature">
-            <span>📸</span>
-            Montrer mon travail
-          </div>
+<div class="stats-modern">
 
-          <div class="feature">
-            <span>🏆</span>
-            Récompenses
-          </div>
+<div class="stat-modern xp">
+<span class="stat-icon">⭐</span>
+XP
+<span id="xpStat" class="stat-number">0</span>
+</div>
 
-          <div class="feature">
-            <span>📈</span>
-            Ma progression
-          </div>
+<div class="stat-modern serie">
+<span class="stat-icon">🔥</span>
+Série
+<span id="serieStat" class="stat-number">0</span>
+</div>
 
-          <div class="feature">
-            <span>⚙️</span>
-            Mon profil
-          </div>
+<div class="stat-modern progress">
+<span class="stat-icon">📈</span>
+Progression
+<span id="progressionStat" class="stat-number">0%</span>
+</div>
 
-        </div>
+</div>
 
-      </div>
 
-    </section>
+<div class="mission-card">
 
+<div class="mission-icon">🎯</div>
 
-    <!-- ÉCRAN 4 : COURS -->
-    <section id="courseScreen" class="screen">
+<div>
 
-      <div class="home-box">
+<h3>Mission du jour</h3>
 
-        <div class="parrot">🦜</div>
+<p>
+<strong>Les nombres décimaux</strong><br>
+Apprends, comprends et progresse !
+</p>
 
-        <h2>📚 Première mission</h2>
+<button
+class="mission-button"
+onclick="commencerMission()">
+Continuer la mission ➜
+</button>
 
-        <div class="coach-message">
-          🦜 <strong>Matho :</strong>
-          « Commençons ! Aujourd'hui, nous allons apprendre
-          les nombres décimaux. »
-        </div>
+</div>
 
-        <div class="lesson">
+</div>
 
-          <h3>🔢 Les nombres décimaux</h3>
 
-          <p>
-            Un nombre décimal possède une partie entière et une partie
-            décimale.
-          </p>
+<h3 class="actions-title">
+⭐ Que veux-tu faire ?
+</h3>
 
-          <br>
 
-          <p>
-            💡 Exemple :
-            <strong>12,5</strong>
-          </p>
+<div class="features-modern">
 
-          <p>
-            12 est la partie entière et 5 est la partie décimale.
-          </p>
+<div class="feature-modern f-blue"
+onclick="ouvrirCours()">
+<span>📚</span>
+<strong>Cours</strong>
+<small>Découvre et apprends</small>
+</div>
 
-          <br>
+<div class="feature-modern f-green"
+onclick="commencerExercices()">
+<span>🎯</span>
+<strong>Exercices</strong>
+<small>Entraîne-toi</small>
+</div>
 
-          <p>
-            🦜 <strong>Matho :</strong>
-            « Retient surtout ceci : la virgule sépare la partie
-            entière de la partie décimale. »
-          </p>
+<div class="feature-modern f-purple"
+onclick="ouvrirTravail()">
+<span>📸</span>
+<strong>Montrer mon travail</strong>
+<small>Explique ton raisonnement</small>
+</div>
 
-        </div>
+<div class="feature-modern f-yellow"
+onclick="ouvrirRecompenses()">
+<span>🏆</span>
+<strong>Récompenses</strong>
+<small>Gagne des badges</small>
+</div>
 
-        <button onclick="commencerExercices()">
-          ✏️ J'ai compris, faire les exercices
-        </button>
+<div class="feature-modern f-pink"
+onclick="ouvrirProgression()">
+<span>📈</span>
+<strong>Ma progression</strong>
+<small>Regarde tes résultats</small>
+</div>
 
-      </div>
+<div class="feature-modern f-cyan"
+onclick="ouvrirProfil()">
+<span>⚙️</span>
+<strong>Mon profil</strong>
+<small>Gère ton profil</small>
+</div>
 
-    </section>
+</div>
 
+</section>
 
-    <!-- ÉCRAN 5 : EXERCICES -->
-    <section id="exerciseScreen" class="screen">
 
-      <div class="home-box">
+<!-- =========================
+     COURS
+========================= -->
 
-        <div class="parrot">🦜</div>
+<section id="courseScreen" class="screen">
 
-        <h2>🎯 Défi Matho</h2>
+<div class="box">
 
-        <div class="coach-message">
-          🦜 <strong>Matho :</strong>
-          « Pas de note ici ! On apprend, on essaie et on progresse. 💪 »
-        </div>
+<div class="center parrot">🦜</div>
 
-        <h3>Quel nombre est le plus grand ?</h3>
+<h2>📚 Première mission</h2>
 
-        <div class="answer-buttons">
+<div class="coach-message">
+🦜 <strong>Matho :</strong>
+Aujourd'hui, nous allons apprendre les nombres décimaux !
+</div>
 
-          <button onclick="verifierReponse(false)">
-            2,5
-          </button>
+<div class="lesson">
 
-          <button onclick="verifierReponse(true)">
-            2,8
-          </button>
+<h3>🔢 Les nombres décimaux</h3>
 
-        </div>
+<p>
+Un nombre décimal possède une partie entière
+et une partie décimale.
+</p>
 
-        <p id="exerciseMessage"></p>
+<br>
 
-        <div id="nextExercise" style="display:none;">
+<p>
+💡 Exemple : <strong>12,5</strong>
+</p>
 
-          <h3 style="margin-top:25px;">
-            🎯 Deuxième défi
-          </h3>
+<p>
+12 est la partie entière et 5 est la partie décimale.
+</p>
 
-          <p style="margin-top:15px;">
-            Quel nombre est le plus petit ?
-          </p>
+<br>
 
-          <div class="answer-buttons">
+<p>
+🦜 <strong>Matho :</strong>
+La virgule sépare les deux parties !
+</p>
 
-            <button onclick="verifierDeuxiemeReponse(true)">
-              3,2
-            </button>
+</div>
 
-            <button onclick="verifierDeuxiemeReponse(false)">
-              3,8
-            </button>
+<button onclick="commencerExercices()">
+✏️ Faire les exercices
+</button>
 
-          </div>
+<br>
 
-          <p id="secondMessage"></p>
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
-        </div>
+</div>
+</section>
 
-      </div>
 
-    </section>
+<!-- =========================
+     EXERCICES
+========================= -->
 
+<section id="exerciseScreen" class="screen">
 
-    <!-- ÉCRAN 6 : MISSION RÉUSSIE -->
-    <section id="successScreen" class="screen">
+<div class="box center">
 
-      <div class="home-box">
+<div class="parrot">🦜</div>
 
-        <div class="parrot">🦜</div>
+<h2>🎯 Défi Matho</h2>
 
-        <h2>🎉 Mission réussie !</h2>
+<div class="coach-message">
+🦜 <strong>Matho :</strong>
+Pas de note ici ! On apprend, on essaie et on progresse. 💪
+</div>
 
-        <div class="success">
+<h3>
+Quel nombre est le plus grand ?
+</h3>
 
-          <h3>🦜 Matho :</h3>
+<div class="answer-buttons">
 
-          <p style="margin-top:15px;">
-            « Bravo ! Tu as progressé aujourd'hui. ❤️
-            Continue comme ça ! »
-          </p>
+<button onclick="verifierReponse(false)">
+2,5
+</button>
 
-          <p style="margin-top:15px;">
-            ⭐ <strong>+20 XP</strong>
-          </p>
+<button onclick="verifierReponse(true)">
+2,8
+</button>
 
-          <p style="margin-top:10px;">
-            💪 Tu as appris sans avoir peur de te tromper !
-          </p>
+</div>
 
-        </div>
+<p id="exerciseMessage"></p>
 
-        <button onclick="retourAccueil()">
-          🏠 Retour à l'accueil
-        </button>
 
-      </div>
+<div id="nextExercise" style="display:none;">
 
-    </section>
+<h3 style="margin-top:25px;">
+🎯 Deuxième défi
+</h3>
 
-  </main>
+<p style="margin-top:15px;">
+Quel nombre est le plus petit ?
+</p>
 
+<div class="answer-buttons">
 
-  <script>
+<button onclick="verifierDeuxiemeReponse(true)">
+3,2
+</button>
 
-    let classeChoisie = "";
+<button onclick="verifierDeuxiemeReponse(false)">
+3,8
+</button>
 
-    let xp = 0;
-    let serie = 0;
-    let progression = 0;
+</div>
 
+<p id="secondMessage"></p>
 
-    function afficherEcran(id) {
+</div>
 
-      document.querySelectorAll(".screen").forEach(function(screen) {
-        screen.classList.remove("active");
-      });
+<br>
 
-      document.getElementById(id).classList.add("active");
-    }
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
+</div>
+</section>
 
-    function choisirClasse(classe) {
 
-      classeChoisie = classe;
+<!-- =========================
+     TRAVAIL
+========================= -->
 
-      localStorage.setItem("mathquest_classe", classe);
+<section id="workScreen" class="screen">
 
-      afficherEcran("profileScreen");
+<div class="box">
 
-      document.getElementById("prenom").focus();
-    }
+<div class="center parrot">🦜</div>
 
+<h2>📸 Montrer mon travail</h2>
 
-    function creerProfil() {
+<div class="coach-message">
+🦜 Explique ta méthode à Matho !
+</div>
 
-      const prenom =
-        document.getElementById("prenom").value.trim();
+<textarea
+id="travailTexte"
+placeholder="Écris ici ton raisonnement..."
+></textarea>
 
-      const nom =
-        document.getElementById("nom").value.trim();
+<br><br>
 
-      const profileMessage =
-        document.getElementById("profileMessage");
+<input
+id="travailPhoto"
+type="file"
+accept="image/*"
+>
 
+<br><br>
 
-      if (prenom === "" || nom === "") {
+<button onclick="enregistrerTravail()">
+📤 Enregistrer
+</button>
 
-        profileMessage.textContent =
-          "⚠️ Entre ton prénom et ton nom.";
+<p id="travailMessage"></p>
 
-        profileMessage.style.color = "red";
+<br>
 
-        return;
-      }
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
+</div>
+</section>
 
-      localStorage.setItem(
-        "mathquest_prenom",
-        prenom
-      );
 
-      localStorage.setItem(
-        "mathquest_nom",
-        nom
-      );
+<!-- =========================
+     RECOMPENSES
+========================= -->
 
-      localStorage.setItem(
-        "mathquest_xp",
-        "0"
-      );
+<section id="rewardScreen" class="screen">
 
-      localStorage.setItem(
-        "mathquest_serie",
-        "0"
-      );
+<div class="box center">
 
-      localStorage.setItem(
-        "mathquest_progression",
-        "0"
-      );
+<div class="parrot">🦜</div>
 
+<h2>🏆 Mes récompenses</h2>
 
-      xp = 0;
-      serie = 0;
-      progression = 0;
+<div class="rewards">
 
+<div class="reward">
+<div class="badge">🌟</div>
+<h3>Premier pas</h3>
+<p>Profil créé</p>
+</div>
 
-      document.getElementById("bienvenueNom").textContent =
-        "Bienvenue " + prenom + " ! 🦜";
+<div id="badgeExercice" class="reward locked">
+<div class="badge">🎯</div>
+<h3>Premier défi</h3>
+<p>Réussir un exercice</p>
+</div>
 
+<div id="badgeMission" class="reward locked">
+<div class="badge">🏆</div>
+<h3>Mission réussie</h3>
+<p>Terminer une mission</p>
+</div>
 
-      document.getElementById("classeEleve").textContent =
-        "🎓 Classe : " + classeChoisie;
+<div id="badgeXP" class="reward locked">
+<div class="badge">⭐</div>
+<h3>Champion</h3>
+<p>100 XP</p>
+</div>
 
+</div>
 
-      mettreAJourStats();
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
-      afficherEcran("homeScreen");
-    }
+</div>
+</section>
 
 
-    function commencerMission() {
+<!-- =========================
+     PROGRESSION
+========================= -->
 
-      afficherEcran("courseScreen");
+<section id="progressScreen" class="screen">
 
-    }
+<div class="box">
 
+<div class="center parrot">🦜</div>
 
-    function commencerExercices() {
+<h2>📈 Ma progression</h2>
 
-      afficherEcran("exerciseScreen");
+<h3>⭐ XP</h3>
+<p id="progressXP">0 XP</p>
 
-    }
+<br>
 
+<h3>🔥 Série</h3>
+<p id="progressSerie">0 jour</p>
 
-    function verifierReponse(correcte) {
+<br>
 
-      const message =
-        document.getElementById("exerciseMessage");
+<h3>📊 Progression</h3>
+<p id="progressPourcentage">0%</p>
 
+<div class="progress-bar">
+<div id="progressBar" class="progress-fill"></div>
+</div>
 
-      if (correcte) {
+<div class="coach-message">
+🦜 Continue tes missions ! Chaque exercice te rapproche de ton objectif. 🚀
+</div>
 
-        message.textContent =
-          "🎉 Bravo ! Exactement ! Matho est fier de toi ! 🦜";
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
-        message.style.color = "#58cc02";
+</div>
+</section>
 
-        xp = 10;
 
-        localStorage.setItem(
-          "mathquest_xp",
-          xp
-        );
+<!-- =========================
+     PROFIL
+========================= -->
 
+<section id="myProfileScreen" class="screen">
 
-        document.getElementById(
-          "nextExercise"
-        ).style.display = "block";
+<div class="box center">
 
+<div class="parrot">🦜</div>
 
-      } else {
+<h2>⚙️ Mon profil</h2>
 
-        message.textContent =
-          "💡 Pas grave ! 2,8 est plus grand que 2,5. Essaie encore ! 💪🦜";
+<div class="profile">
 
-        message.style.color = "#333";
+<p>👤 Prénom :
+<strong id="profilPrenom"></strong>
+</p>
 
-      }
+<p>📝 Nom :
+<strong id="profilNom"></strong>
+</p>
 
-    }
+<p>🎓 Classe :
+<strong id="profilClasse"></strong>
+</p>
 
+<p>⭐ XP :
+<strong id="profilXP"></strong>
+</p>
 
-    function verifierDeuxiemeReponse(correcte) {
+<p>🔥 Série :
+<strong id="profilSerie"></strong>
+</p>
 
-      const message =
-        document.getElementById("secondMessage");
+</div>
 
+<br>
 
-      if (correcte) {
+<button onclick="changerClasse()">
+🎓 Changer de classe
+</button>
 
-        message.textContent =
-          "🎉 Bravo ! Tu as trouvé !";
+<br>
 
-        message.style.color = "#58cc02";
+<button class="red" onclick="reinitialiserProfil()">
+🗑️ Réinitialiser le profil
+</button>
 
+<br>
 
-        xp = 20;
-        progression = 10;
+<button class="gray" onclick="retourAccueil()">
+🏠 Accueil
+</button>
 
+</div>
+</section>
 
-        localStorage.setItem(
-          "mathquest_xp",
-          xp
-        );
 
-        localStorage.setItem(
-          "mathquest_progression",
-          progression
-        );
+<!-- =========================
+     SUCCÈS
+========================= -->
 
+<section id="successScreen" class="screen">
 
-        setTimeout(function() {
+<div class="box center">
 
-          afficherEcran("successScreen");
+<div class="parrot">🦜</div>
 
-        }, 800);
+<h2>🎉 Mission réussie !</h2>
 
+<div class="success">
 
-      } else {
+<h3>🦜 Matho :</h3>
 
-        message.textContent =
-          "💡 Pas grave ! Regarde bien les chiffres après la virgule et réessaie. 🦜";
+<p>
+Bravo ! Tu as progressé aujourd'hui ! ❤️
+</p>
 
-        message.style.color = "#333";
+<p>
+⭐ <strong>+20 XP</strong>
+</p>
 
-      }
+<p>
+💪 Continue comme ça !
+</p>
 
-    }
+</div>
 
+<button onclick="retourAccueil()">
+🏠 Continuer
+</button>
 
-    function mettreAJourStats() {
+</div>
+</section>
 
-      document.getElementById("xpStat").textContent =
-        xp + " ⭐";
+</main>
 
-      document.getElementById("serieStat").textContent =
-        serie + " 🔥";
 
-      document.getElementById("progressionStat").textContent =
-        progression + " %";
+<script>
 
-    }
+let classeChoisie="";
+let xp=0;
+let serie=0;
+let progression=0;
+let exercicesReussis=0;
 
 
-    function retourAccueil() {
+/* AFFICHER UN ÉCRAN */
 
-      mettreAJourStats();
+function afficherEcran(id){
 
-      afficherEcran("homeScreen");
+document.querySelectorAll(".screen").forEach(function(screen){
+screen.classList.remove("active");
+});
 
-    }
+document.getElementById(id).classList.add("active");
 
-  </script>
+window.scrollTo(0,0);
+}
+
+
+/* CHOIX CLASSE */
+
+function choisirClasse(classe){
+
+classeChoisie=classe;
+
+localStorage.setItem(
+"mathquest_classe",
+classe
+);
+
+afficherEcran("profileScreen");
+
+setTimeout(function(){
+document.getElementById("prenom").focus();
+},100);
+}
+
+
+/* CREER PROFIL */
+
+function creerProfil(){
+
+const prenom=
+document.getElementById("prenom").value.trim();
+
+const nom=
+document.getElementById("nom").value.trim();
+
+const message=
+document.getElementById("profileMessage");
+
+if(prenom==="" || nom===""){
+
+message.textContent=
+"⚠️ Entre ton prénom et ton nom.";
+
+message.style.color="red";
+
+return;
+}
+
+localStorage.setItem(
+"mathquest_prenom",
+prenom
+);
+
+localStorage.setItem(
+"mathquest_nom",
+nom
+);
+
+localStorage.setItem(
+"mathquest_classe",
+classeChoisie
+);
+
+xp=0;
+serie=0;
+progression=0;
+exercicesReussis=0;
+
+sauvegarder();
+
+afficherInformations();
+
+afficherEcran("homeScreen");
+}
+
+
+/* SAUVEGARDE */
+
+function sauvegarder(){
+
+localStorage.setItem(
+"mathquest_xp",
+xp
+);
+
+localStorage.setItem(
+"mathquest_serie",
+serie
+);
+
+localStorage.setItem(
+"mathquest_progression",
+progression
+);
+
+localStorage.setItem(
+"mathquest_exercices",
+exercicesReussis
+);
+}
+
+
+/* CHARGEMENT */
+
+function charger(){
+
+classeChoisie=
+localStorage.getItem("mathquest_classe") || "";
+
+xp=
+Number(localStorage.getItem("mathquest_xp")) || 0;
+
+serie=
+Number(localStorage.getItem("mathquest_serie")) || 0;
+
+progression=
+Number(localStorage.getItem("mathquest_progression")) || 0;
+
+exercicesReussis=
+Number(localStorage.getItem("mathquest_exercices")) || 0;
+}
+
+
+/* INFOS */
+
+function afficherInformations(){
+
+const prenom=
+localStorage.getItem("mathquest_prenom") || "";
+
+document.getElementById(
+"bienvenueNom"
+).textContent=
+prenom+" !";
+
+document.getElementById(
+"classeEleve"
+).textContent=
+"🎓 Classe : "+classeChoisie;
+
+mettreAJourStats();
+}
+
+
+/* STATS */
+
+function mettreAJourStats(){
+
+document.getElementById(
+"xpStat"
+).textContent=xp;
+
+document.getElementById(
+"serieStat"
+).textContent=serie;
+
+document.getElementById(
+"progressionStat"
+).textContent=progression+"%";
+}
+
+
+/* COURS */
+
+function ouvrirCours(){
+
+afficherEcran("courseScreen");
+}
+
+
+/* MISSION */
+
+function commencerMission(){
+
+afficherEcran("courseScreen");
+}
+
+
+/* EXERCICES */
+
+function commencerExercices(){
+
+afficherEcran("exerciseScreen");
+}
+
+
+/* PREMIER EXERCICE */
+
+function verifierReponse(correcte){
+
+const message=
+document.getElementById("exerciseMessage");
+
+if(correcte){
+
+message.textContent=
+"🎉 Bravo ! 2,8 est plus grand que 2,5 ! 🦜";
+
+message.style.color="#58cc02";
+
+if(!message.dataset.valide){
+
+xp+=10;
+exercicesReussis++;
+
+message.dataset.valide="oui";
+}
+
+document.getElementById(
+"nextExercise"
+).style.display="block";
+
+}else{
+
+message.textContent=
+"💡 Pas grave ! Regarde bien les nombres et réessaie. 💪";
+
+message.style.color="#e53935";
+}
+
+sauvegarder();
+mettreAJourStats();
+majRecompenses();
+}
+
+
+/* DEUXIEME EXERCICE */
+
+function verifierDeuxiemeReponse(correcte){
+
+const message=
+document.getElementById("secondMessage");
+
+if(correcte){
+
+message.textContent=
+"🎉 Bravo ! 3,2 est bien le plus petit !";
+
+message.style.color="#58cc02";
+
+if(!message.dataset.valide){
+
+xp+=10;
+progression=10;
+serie++;
+exercicesReussis++;
+
+message.dataset.valide="oui";
+}
+
+sauvegarder();
+mettreAJourStats();
+majRecompenses();
+
+setTimeout(function(){
+
+afficherEcran("successScreen");
+
+},800);
+
+}else{
+
+message.textContent=
+"💡 Regarde bien les chiffres après la virgule. 🦜";
+
+message.style.color="#e53935";
+}
+
+}
+
+
+/* TRAVAIL */
+
+function ouvrirTravail(){
+
+afficherEcran("workScreen");
+}
+
+
+function enregistrerTravail(){
+
+const texte=
+document.getElementById("travailTexte").value.trim();
+
+const photo=
+document.getElementById("travailPhoto").files.length;
+
+const message=
+document.getElementById("travailMessage");
+
+if(texte==="" && photo===0){
+
+message.textContent=
+"⚠️ Ajoute une réponse ou une photo.";
+
+message.style.color="red";
+
+return;
+}
+
+localStorage.setItem(
+"mathquest_travail",
+texte
+);
+
+message.textContent=
+"✅ Ton travail est enregistré ! 🦜";
+
+message.style.color="#58cc02";
+}
+
+
+/* RECOMPENSES */
+
+function ouvrirRecompenses(){
+
+majRecompenses();
+
+afficherEcran("rewardScreen");
+}
+
+
+function majRecompenses(){
+
+if(exercicesReussis>0){
+
+document.getElementById(
+"badgeExercice"
+).classList.remove("locked");
+}
+
+if(progression>0){
+
+document.getElementById(
+"badgeMission"
+).classList.remove("locked");
+}
+
+if(xp>=100){
+
+document.getElementById(
+"badgeXP"
+).classList.remove("locked");
+}
+}
+
+
+/* PROGRESSION */
+
+function ouvrirProgression(){
+
+document.getElementById(
+"progressXP"
+).textContent=xp+" XP";
+
+document.getElementById(
+"progressSerie"
+).textContent=serie+" jour";
+
+document.getElementById(
+"progressPourcentage"
+).textContent=progression+"%";
+
+document.getElementById(
+"progressBar"
+).style.width=
+progression+"%";
+
+afficherEcran("progressScreen");
+}
+
+
+/* PROFIL */
+
+function ouvrirProfil(){
+
+document.getElementById(
+"profilPrenom"
+).textContent=
+localStorage.getItem("mathquest_prenom") || "";
+
+document.getElementById(
+"profilNom"
+).textContent=
+localStorage.getItem("mathquest_nom") || "";
+
+document.getElementById(
+"profilClasse"
+).textContent=
+classeChoisie;
+
+document.getElementById(
+"profilXP"
+).textContent=
+xp+" ⭐";
+
+document.getElementById(
+"profilSerie"
+).textContent=
+serie+" 🔥";
+
+afficherEcran("myProfileScreen");
+}
+
+
+/* CHANGER CLASSE */
+
+function changerClasse(){
+
+afficherEcran("classeScreen");
+}
+
+
+/* ACCUEIL */
+
+function retourAccueil(){
+
+charger();
+
+afficherInformations();
+
+majRecompenses();
+
+afficherEcran("homeScreen");
+}
+
+
+/* RESET */
+
+function reinitialiserProfil(){
+
+const confirmation=
+confirm(
+"Veux-tu vraiment supprimer ton profil MathQuest ?"
+);
+
+if(!confirmation)return;
+
+localStorage.clear();
+
+classeChoisie="";
+xp=0;
+serie=0;
+progression=0;
+exercicesReussis=0;
+
+document.getElementById("prenom").value="";
+document.getElementById("nom").value="";
+
+afficherEcran("classeScreen");
+}
+
+
+/* AU CHARGEMENT */
+
+window.addEventListener("load",function(){
+
+charger();
+
+const prenom=
+localStorage.getItem("mathquest_prenom");
+
+const nom=
+localStorage.getItem("mathquest_nom");
+
+const classe=
+localStorage.getItem("mathquest_classe");
+
+if(prenom && nom && classe){
+
+afficherInformations();
+
+majRecompenses();
+
+afficherEcran("homeScreen");
+
+}else{
+
+afficherEcran("classeScreen");
+}
+
+});
+
+</script>
 
 </body>
 </html>
- 
  
  

@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MathsQuest</title>
+  <title>MathQuest</title>
 
   <style>
     * {
@@ -42,7 +41,17 @@
       padding: 20px;
     }
 
-    .welcome {
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .welcome,
+    .profile-box,
+    .home-box {
       background: white;
       border-radius: 20px;
       padding: 30px;
@@ -55,7 +64,7 @@
       margin-bottom: 15px;
     }
 
-    .welcome h2 {
+    h2 {
       color: #58cc02;
       margin-bottom: 10px;
     }
@@ -73,7 +82,6 @@
       border-radius: 15px;
       padding: 20px;
       text-align: center;
-      cursor: pointer;
       transition: 0.2s;
     }
 
@@ -84,22 +92,112 @@
 
     .class-card h3 {
       color: #333;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
-    .class-card button {
+    button {
       background: #58cc02;
       color: white;
       border: none;
-      padding: 8px 15px;
-      border-radius: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
       cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #46a900;
+    }
+
+    .input-group {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #58cc02;
+    }
+
+    .coach-message {
+      background: #f0f9e9;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 17px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .stat {
+      background: #f4f7fb;
+      border-radius: 15px;
+      padding: 15px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: #58cc02;
+      margin-bottom: 5px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .feature {
+      background: #f4f7fb;
+      border-radius: 15px;
+      padding: 20px;
+      font-weight: bold;
+    }
+
+    .feature span {
+      display: block;
+      font-size: 35px;
+      margin-bottom: 8px;
     }
 
     #message {
-      margin-top: 25px;
+      margin-top: 20px;
       font-weight: bold;
       text-align: center;
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome,
+      .profile-box,
+      .home-box {
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -107,83 +205,255 @@
 <body>
 
   <header>
-    <h1>🦜 MathsQuest</h1>
+    <h1>🦜 MathQuest</h1>
     <p>Apprends les mathématiques en t'amusant !</p>
   </header>
 
   <main>
 
-    <section class="welcome">
-      <div class="parrot">🦜</div>
+    <!-- ÉCRAN 1 : CHOIX DE LA CLASSE -->
+    <section id="classeScreen" class="screen active">
 
-      <h2>Bienvenue sur MathsQuest !</h2>
+      <div class="welcome">
 
-      <p>
-        Choisis ta classe et commence ton aventure mathématique.
-      </p>
+        <div class="parrot">🦜</div>
 
-      <div class="classes">
+        <h2>Bienvenue sur MathQuest !</h2>
 
-        <div class="class-card">
-          <h3>6e</h3>
-          <button onclick="choisirClasse('6e')">Commencer</button>
+        <p>
+          Choisis ta classe et commence ton aventure mathématique.
+        </p>
+
+        <div class="classes">
+
+          <div class="class-card">
+            <h3>6e</h3>
+            <button onclick="choisirClasse('6e')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>5e</h3>
+            <button onclick="choisirClasse('5e')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>4e</h3>
+            <button onclick="choisirClasse('4e')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>3e</h3>
+            <button onclick="choisirClasse('3e')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>2nde</h3>
+            <button onclick="choisirClasse('2nde')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>1ère</h3>
+            <button onclick="choisirClasse('1ère')">Commencer</button>
+          </div>
+
+          <div class="class-card">
+            <h3>Terminale</h3>
+            <button onclick="choisirClasse('Terminale')">Commencer</button>
+          </div>
+
         </div>
 
-        <div class="class-card">
-          <h3>5e</h3>
-          <button onclick="choisirClasse('5e')">Commencer</button>
+        <div id="message"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ÉCRAN 2 : CRÉATION DU PROFIL -->
+    <section id="profileScreen" class="screen">
+
+      <div class="profile-box">
+
+        <div class="parrot">🦜</div>
+
+        <h2>Créons ton profil !</h2>
+
+        <div class="coach-message">
+          🦜 Salut ! Je suis ton coach MathQuest !<br>
+          Comment t'appelles-tu ?
         </div>
 
-        <div class="class-card">
-          <h3>4e</h3>
-          <button onclick="choisirClasse('4e')">Commencer</button>
+        <div class="input-group">
+          <label for="prenom">👤 Ton prénom</label>
+          <input
+            type="text"
+            id="prenom"
+            placeholder="Exemple : Paul"
+            autocomplete="given-name"
+          >
         </div>
 
-        <div class="class-card">
-          <h3>3e</h3>
-          <button onclick="choisirClasse('3e')">Commencer</button>
+        <div class="input-group">
+          <label for="nom">📝 Ton nom</label>
+          <input
+            type="text"
+            id="nom"
+            placeholder="Exemple : Traoré"
+            autocomplete="family-name"
+          >
         </div>
 
-        <div class="class-card">
-          <h3>2nde</h3>
-          <button onclick="choisirClasse('2nde')">Commencer</button>
+        <button onclick="creerProfil()">
+          🚀 Créer mon profil
+        </button>
+
+        <div id="profileMessage"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ÉCRAN 3 : ACCUEIL MATHQUEST -->
+    <section id="homeScreen" class="screen">
+
+      <div class="home-box">
+
+        <div class="parrot">🦜</div>
+
+        <h2 id="bienvenueNom">
+          Bienvenue !
+        </h2>
+
+        <p id="classeEleve"></p>
+
+        <div class="coach-message">
+          🦜 Prêt pour ton aventure mathématique ?
         </div>
 
-        <div class="class-card">
-          <h3>1ère</h3>
-          <button onclick="choisirClasse('1ère')">Commencer</button>
+        <div class="stats">
+
+          <div class="stat">
+            <strong>0 ⭐</strong>
+            XP
+          </div>
+
+          <div class="stat">
+            <strong>0 🔥</strong>
+            Série
+          </div>
+
+          <div class="stat">
+            <strong>0 %</strong>
+            Progression
+          </div>
+
         </div>
 
-        <div class="class-card">
-          <h3>Terminale</h3>
-          <button onclick="choisirClasse('Terminale')">Commencer</button>
+        <h3>🚀 Que veux-tu faire ?</h3>
+
+        <div class="features">
+
+          <div class="feature">
+            <span>📚</span>
+            Cours
+          </div>
+
+          <div class="feature">
+            <span>🎯</span>
+            Exercices
+          </div>
+
+          <div class="feature">
+            <span>📸</span>
+            Montrer mon travail
+          </div>
+
+          <div class="feature">
+            <span>🏆</span>
+            Récompenses
+          </div>
+
+          <div class="feature">
+            <span>📈</span>
+            Ma progression
+          </div>
+
+          <div class="feature">
+            <span>⚙️</span>
+            Mon profil
+          </div>
+
         </div>
 
       </div>
 
-      <div id="message"></div>
     </section>
 
   </main>
 
+
   <script>
 
+    let classeChoisie = "";
 
-function choisirClasse(classe) {
-    const message = document.getElementById("message");
+    function afficherEcran(id) {
 
-    message.textContent = "🎯 Tu as choisi la classe " + classe + " !";
+      document.querySelectorAll(".screen").forEach(function(screen) {
+        screen.classList.remove("active");
+      });
 
-    localStorage.setItem("mathquest_classe", classe);
+      document.getElementById(id).classList.add("active");
+    }
 
-    setTimeout(function() {
-        message.textContent = "🦜 Bienvenue dans MathQuest !";
-    }, 2000);
-}
 
-</script>
-    
-  
+    function choisirClasse(classe) {
+
+      classeChoisie = classe;
+
+      localStorage.setItem("mathquest_classe", classe);
+
+      afficherEcran("profileScreen");
+
+      document.getElementById("prenom").focus();
+    }
+
+
+    function creerProfil() {
+
+      const prenom = document.getElementById("prenom").value.trim();
+      const nom = document.getElementById("nom").value.trim();
+      const profileMessage = document.getElementById("profileMessage");
+
+      if (prenom === "" || nom === "") {
+
+        profileMessage.textContent =
+          "⚠️ Entre ton prénom et ton nom.";
+
+        profileMessage.style.color = "red";
+
+        return;
+      }
+
+      localStorage.setItem("mathquest_prenom", prenom);
+      localStorage.setItem("mathquest_nom", nom);
+
+      localStorage.setItem("mathquest_xp", "0");
+      localStorage.setItem("mathquest_serie", "0");
+      localStorage.setItem("mathquest_progression", "0");
+
+      document.getElementById("bienvenueNom").textContent =
+        "Bienvenue " + prenom + " ! 🦜";
+
+      document.getElementById("classeEleve").textContent =
+        "🎓 Classe : " + classeChoisie;
+
+      afficherEcran("homeScreen");
+    }
+
+
+  </script>
 
 </body>
 </html>

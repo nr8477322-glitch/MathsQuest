@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathQuest</title>
+
+<style>
+:root{
+  --green:#58cc02;
+  --green-dark:#46a800;
+  --blue:#1cb0f6;
+  --orange:#ff9600;
+  --purple:#ce82ff;
+  --red:#ff4b4b;
+  --bg:#f6f7fb;
+  --text:#263238;
+  --muted:#667085;
+  --white:#fff;
+  --border:#e5e7eb;
+  --shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+}
+
+.screen.active{
+  display:block;
+}
+
+.center{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.logo{
+  font-size:42px;
+  font-weight:900;
+  color:var(--green);
+  text-align:center;
+}
+
+.subtitle{
+  color:var(--muted);
+  text-align:center;
+  line-height:1.6;
+}
+
+.matho{
+  display:block;
+  width:min(330px,85vw);
+  height:280px;
+  object-fit:contain;
+  margin:15px auto;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  font-weight:800;
+  margin-top:10px;
+}
+
+.primary{
+  background:var(--green);
+  color:white;
+  box-shadow:0 4px 0 var(--green-dark);
+}
+
+.secondary{
+  background:#eef8ff;
+  color:#1479ad;
+}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:white;
+  border-bottom:1px solid var(--border);
+}
+
+.top-inner{
+  max-width:1050px;
+  margin:auto;
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.brand{
+  color:var(--green);
+  font-size:22px;
+  font-weight:900;
+}
+
+.stats{
+  display:flex;
+  gap:7px;
+}
+
+.pill{
+  background:#f1f3f5;
+  padding:8px 11px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  align-items:center;
+  gap:20px;
+}
+
+.hero h1{
+  font-size:34px;
+  margin:8px 0;
+}
+
+.hero p{
+  line-height:1.6;
+  color:var(--muted);
+}
+
+.hero .matho{
+  height:240px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+}
+
+.section{
+  margin-top:20px;
+}
+
+.menu{
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:white;
+  padding:20px;
+  text-align:left;
+  font-weight:800;
+  box-shadow:var(--shadow);
+}
+
+.menu span{
+  display:block;
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.progress{
+  height:12px;
+  background:#e8edf0;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  background:var(--green);
+  width:0;
+  transition:.4s;
+}
+
+.class-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:12px;
+}
+
+.class-btn{
+  border:2px solid var(--border);
+  background:white;
+  border-radius:18px;
+  padding:22px 10px;
+  font-weight:900;
+}
+
+.class-btn:hover{
+  border-color:var(--green);
+}
+
+.field{
+  margin:13px 0;
+}
+
+.field label{
+  display:block;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  padding:13px;
+  border:2px solid var(--border);
+  border-radius:13px;
+  background:white;
+}
+
+.avatar-row{
+  display:flex;
+  gap:12px;
+}
+
+.avatar{
+  border:2px solid var(--border);
+  background:white;
+  border-radius:18px;
+  font-size:40px;
+  padding:10px;
+}
+
+.avatar.selected{
+  border-color:var(--green);
+  background:#efffe7;
+}
+
+.course{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  margin:12px 0;
+  box-shadow:var(--shadow);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.course h3{
+  margin:0 0 6px;
+}
+
+.course p{
+  margin:0;
+  color:var(--muted);
+}
+
+.small-btn{
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  font-weight:800;
+}
+
+.lesson{
+  background:white;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:var(--shadow);
+  line-height:1.7;
+}
+
+.lesson h2{
+  margin-top:0;
+}
+
+.lesson h3{
+  color:var(--green);
+}
+
+.example{
+  background:#f0f9eb;
+  border-left:5px solid var(--green);
+  padding:14px;
+  border-radius:10px;
+}
+
+.audio{
+  background:#f7fbff;
+  border:1px solid #d9efff;
+  padding:15px;
+  border-radius:16px;
+  margin:18px 0;
+}
+
+.audio-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.audio-buttons button{
+  padding:10px 13px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:white;
+  font-weight:700;
+}
+
+.range{
+  width:100%;
+}
+
+.choice{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:15px;
+  margin:10px 0;
+  background:white;
+  border:2px solid var(--border);
+  border-radius:14px;
+  font-weight:700;
+}
+
+.choice.correct{
+  border-color:var(--green);
+  background:#efffe7;
+}
+
+.choice.wrong{
+  border-color:var(--red);
+  background:#fff0f0;
+}
+
+.feedback{
+  padding:14px;
+  border-radius:14px;
+  margin-top:12px;
+  font-weight:700;
+}
+
+.badges{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+.badge{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+}
+
+.badge.locked{
+  opacity:.4;
+}
+
+.notice{
+  padding:14px;
+  border-radius:15px;
+  background:#fff8e8;
+  border-left:5px solid var(--orange);
+  margin-top:15px;
+}
+
+@media(max-width:700px){
+  .container{
+    padding:14px;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  .hero .matho{
+    height:210px;
+  }
+
+  .course{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .small-btn{
+    width:100%;
+  }
+
+  .top-inner{
+    padding:11px 14px;
+  }
+
+  .stats{
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= START ================= -->
+
+<section id="startScreen" class="screen active">
+  <div class="center">
+    <div class="card" style="max-width:650px;width:100%;text-align:center">
+
+      <div class="logo">🦜 MathQuest</div>
+
+      <p class="subtitle">
+        Apprends les mathématiques, écoute les cours,
+        fais des exercices et progresse à ton rythme.
+      </p>
+
+      <img
+        src="matho-1.png"
+        class="matho"
+        alt="Matho, le perroquet de MathQuest"
+      >
+
+      <button class="btn primary" onclick="showClassScreen()">
+        🚀 Commencer
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= CLASSE ================= -->
+
+<section id="classScreen" class="screen">
+  <div class="center">
+    <div class="card" style="max-width:760px;width:100%">
+
+      <h1>🎓 Choisis ta classe</h1>
+
+      <p class="subtitle">
+        Choisis ton niveau pour commencer ton aventure.
+      </p>
+
+      <div id="classes" class="class-grid"></div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= PROFIL ================= -->
+
+<section id="profileScreen" class="screen">
+  <div class="center">
+    <div class="card" style="max-width:600px;width:100%">
+
+      <h1>👤 Créons ton profil</h1>
+
+      <div class="field">
+        <label>Prénom</label>
+        <input id="prenom" placeholder="Ton prénom">
+      </div>
+
+      <div class="field">
+        <label>Nom</label>
+        <input id="nom" placeholder="Ton nom">
+      </div>
+
+      <div class="field">
+        <label>Âge</label>
+        <input id="age" type="number" min="5" max="25" placeholder="Ton âge">
+      </div>
+
+      <label><b>Choisis ton avatar</b></label>
+
+      <div class="avatar-row" style="margin:12px 0">
+        <button id="boy" class="avatar selected" onclick="chooseAvatar('👦')">
+          👦
+        </button>
+
+        <button id="girl" class="avatar" onclick="chooseAvatar('👧')">
+          👧
+        </button>
+      </div>
+
+      <p>
+        Classe choisie :
+        <b id="profileClass"></b>
+      </p>
+
+      <button class="btn primary" onclick="createProfile()">
+        Continuer →
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= ACCUEIL ================= -->
+
+<section id="homeScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">🦜 MathQuest</div>
+
+    <div class="stats">
+      <span class="pill">
+        ⭐ <b id="topXp">0</b> XP
+      </span>
+
+      <span class="pill">
+        🔥 <b id="topStreak">0</b>
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="hero card">
+
+    <div>
+
+      <div class="pill" style="display:inline-block">
+        🎯 Mission du jour
+      </div>
+
+      <h1 id="welcome">
+        Bonjour !
+      </h1>
+
+      <p id="mathoMessage">
+        Matho est prêt à apprendre avec toi.
+      </p>
+
+      <div class="progress">
+        <div id="homeBar" class="bar"></div>
+      </div>
+
+      <p id="homeProgress" class="subtitle">
+        0% du parcours
+      </p>
+
+    </div>
+
+    <img
+      src="matho-1.png"
+      class="matho"
+      alt="Matho"
+    >
+
+  </div>
+
+
+  <div class="grid section">
+
+    <button class="menu" onclick="showCourses()">
+      <span>📚</span>
+      Cours
+    </button>
+
+    <button class="menu" onclick="showExercises()">
+      <span>✏️</span>
+      Exercices
+    </button>
+
+    <button class="menu" onclick="showProgress()">
+      <span>📈</span>
+      Ma progression
+    </button>
+
+    <button class="menu" onclick="showWork()">
+      <span>📸</span>
+      Montrer mon travail
+    </button>
+
+    <button class="menu" onclick="showRewards()">
+      <span>🏆</span>
+      Récompenses
+    </button>
+
+    <button class="menu" onclick="showProfile()">
+      <span>👤</span>
+      Mon profil
+    </button>
+
+  </div>
+
+
+  <div class="card section">
+
+    <h2>🎯 Continue ton aventure</h2>
+
+    <p id="nextMission"></p>
+
+    <button class="btn primary" onclick="showCourses()">
+      Continuer
+    </button>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- ================= COURS ================= -->
+
+<section id="coursesScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">📚 Cours</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <h1 id="coursesTitle"></h1>
+
+  <div id="courseList"></div>
+
+</div>
+</section>
+
+
+<!-- ================= LEÇON ================= -->
+
+<section id="lessonScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">📖 Leçon</div>
+    <button onclick="showCourses()">← Retour</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="lessonContent" class="lesson"></div>
+
+</div>
+</section>
+
+
+<!-- ================= EXERCICES ================= -->
+
+<section id="exerciseScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">✏️ Exercices</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div id="exerciseBox"></div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ================= PROGRESSION ================= -->
+
+<section id="progressScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">📈 Progression</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>Ma progression</h1>
+
+    <h2>
+      ⭐ <span id="pXp">0</span> XP
+    </h2>
+
+    <p>
+      Parcours :
+      <b id="pPercent">0%</b>
+    </p>
+
+    <div class="progress">
+      <div id="pBar" class="bar"></div>
+    </div>
+
+    <p>
+      🔥 Série :
+      <b id="pStreak">0</b> jour(s)
+    </p>
+
+  </div>
+
+
+  <div class="card section">
+
+    <h2>🏅 Badges</h2>
+
+    <div id="badgeList" class="badges"></div>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- ================= TRAVAIL ================= -->
+
+<section id="workScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">📸 Mon travail</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>Montre ton travail</h1>
+
+    <p class="subtitle">
+      Ajoute une photo et explique ton raisonnement.
+    </p>
+
+    <div class="field">
+
+      <label>Photo</label>
+
+      <input
+        id="workPhoto"
+        type="file"
+        accept="image/*"
+        onchange="previewWork(event)"
+      >
+
+    </div>
+
+    <img
+      id="workPreview"
+      style="
+        display:none;
+        max-width:100%;
+        max-height:350px;
+        border-radius:15px;
+      "
+    >
+
+    <div class="field">
+
+      <label>Mon raisonnement</label>
+
+      <textarea
+        id="workText"
+        rows="7"
+        placeholder="Explique comment tu as trouvé ta réponse..."
+      ></textarea>
+
+    </div>
+
+    <button class="btn primary" onclick="saveWork()">
+      💾 Enregistrer
+    </button>
+
+    <div id="workMsg"></div>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- ================= RÉCOMPENSES ================= -->
+
+<section id="rewardsScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">🏆 Récompenses</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>Mes récompenses</h1>
+
+    <div id="rewardsList" class="badges"></div>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- ================= PROFIL ================= -->
+
+<section id="profileViewScreen" class="screen">
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">👤 Mon profil</div>
+    <button onclick="showHome()">🏠</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card" style="text-align:center">
+
+    <div id="profileAvatar" style="font-size:70px"></div>
+
+    <h1 id="profileName"></h1>
+
+    <p>
+      Classe :
+      <b id="profileClassView"></b>
+    </p>
+
+    <p>
+      Âge :
+      <b id="profileAge"></b>
+    </p>
+
+    <button class="btn secondary" onclick="changeClass()">
+      🔄 Changer de classe
+    </button>
+
+    <button
+      class="btn"
+      style="background:#fff0f0;color:#c00000"
+      onclick="resetApp()"
+    >
+      Réinitialiser le profil
+    </button>
+
+  </div>
+
+</div>
+</section>
+
+
+<script>
+
+/* =========================================================
+   DONNÉES DES COURS
+========================================================= */
+
+const courses = {
+
+"6e":[
+
+[
+"Les nombres entiers et décimaux",
+"Un nombre entier n'a pas de partie décimale. Un nombre décimal possède une partie entière et une partie décimale.",
+"Quel est le plus grand : 2,5 ; 2,8 ; 2,3 ; 2,1 ?",
+"2,8"
+],
+
+[
+"Les opérations",
+"On utilise l'addition, la soustraction, la multiplication et la division. Les parenthèses et les priorités de calcul sont importantes.",
+"3 + 4 × 2 = ?",
+"11"
+],
+
+[
+"Les fractions",
+"Une fraction s'écrit a/b. a est le numérateur et b le dénominateur. Les fractions peuvent représenter des nombres.",
+"Quelle fraction est égale à 0,5 ?",
+"1/2"
+],
+
+[
+"Les angles",
+"Un angle aigu mesure moins de 90°, un angle droit 90°, un angle obtus entre 90° et 180° et un angle plat 180°.",
+"Combien mesure un angle droit ?",
+"90°"
+],
+
+[
+"Le triangle",
+"Un triangle possède trois côtés. Il peut être équilatéral, isocèle ou rectangle.",
+"Combien de côtés possède un triangle ?",
+"3"
+],
+
+[
+"Le parallélogramme",
+"Dans un parallélogramme, les côtés opposés sont parallèles et de même longueur. Le rectangle, le carré et le losange sont des cas particuliers.",
+"Un carré est-il un parallélogramme ?",
+"Oui"
+],
+
+[
+"Symétrie orthogonale",
+"Une symétrie orthogonale utilise un axe. Un point et son image sont à la même distance de l'axe.",
+"Comment appelle-t-on la ligne de symétrie ?",
+"Axe"
+],
+
+[
+"Proportionnalité",
+"Dans une situation de proportionnalité, on utilise un même coefficient multiplicateur.",
+"2 cahiers coûtent 500 F. Combien coûtent 4 cahiers ?",
+"1000 F"
+],
+
+[
+"Repérage",
+"Sur une droite graduée ou dans un plan, on utilise des coordonnées. Dans A(2 ; 3), 2 est l'abscisse.",
+"Quelle est l'abscisse de A(2 ; 3) ?",
+"2"
+]
+
+],
+
+"5e":[
+
+[
+"Multiples et diviseurs",
+"Un nombre est multiple d'un autre lorsqu'il peut être obtenu en le multipliant par un entier.",
+"24 est-il un multiple de 6 ?",
+"Oui"
+],
+
+[
+"Division euclidienne",
+"Dans a = bq + r, a est le dividende, b le diviseur, q le quotient et r le reste.",
+"Quel est le reste de 17 ÷ 5 ?",
+"2"
+],
+
+[
+"Nombres premiers",
+"Un nombre premier possède exactement deux diviseurs positifs : 1 et lui-même.",
+"13 est-il premier ?",
+"Oui"
+],
+
+[
+"Fractions",
+"Pour additionner des fractions de même dénominateur, on additionne les numérateurs.",
+"2/7 + 3/7 = ?",
+"5/7"
+],
+
+[
+"Nombres relatifs",
+"Les nombres relatifs peuvent être positifs ou négatifs. Sur une droite graduée, le plus grand est le plus à droite.",
+"Quel est le plus grand : -5, -2, -8, -10 ?",
+"-2"
+],
+
+[
+"Développement et factorisation",
+"Développer consiste notamment à distribuer un facteur : a(b+c)=ab+ac.",
+"3(x+2) = ?",
+"3x+6"
+],
+
+[
+"Équations",
+"Une équation contient une inconnue. On cherche la valeur qui rend l'égalité vraie.",
+"x + 3 = 8. x = ?",
+"5"
+],
+
+[
+"Puissances",
+"Une puissance permet d'écrire un produit de facteurs identiques. 2³ signifie 2×2×2.",
+"2³ = ?",
+"8"
+]
+
+],
+
+"4e":[
+
+[
+"Nombres rationnels",
+"Un nombre rationnel peut s'écrire a/b avec b différent de 0.",
+"Donne un exemple de nombre rationnel.",
+"3/4"
+],
+
+[
+"Puissances",
+"Lors d'une multiplication de puissances de même base, on additionne les exposants.",
+"2² × 2³ = 2 puissance combien ?",
+"5"
+],
+
+[
+"Calcul littéral",
+"On peut réduire une expression en regroupant les termes semblables.",
+"3x + 2x = ?",
+"5x"
+],
+
+[
+"Équations du premier degré",
+"Pour résoudre une équation, on effectue les mêmes opérations aux deux membres.",
+"2x + 4 = 10. x = ?",
+"3"
+],
+
+[
+"Inégalités",
+"On utilise <, >, ≤ et ≥. Une multiplication par un nombre négatif inverse le sens.",
+"5 est-il inférieur à 8 ?",
+"Oui"
+],
+
+[
+"Pythagore",
+"Dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés.",
+"Avec 3 et 4 comme côtés de l'angle droit, l'hypoténuse vaut ?",
+"5"
+],
+
+[
+"Proportionnalité et pourcentages",
+"Un pourcentage est une proportion sur 100.",
+"20 % de 150 = ?",
+"30"
+],
+
+[
+"Statistiques",
+"La moyenne est la somme des valeurs divisée par leur nombre.",
+"Moyenne de 10, 12 et 14 ?",
+"12"
+]
+
+],
+
+"3e":[
+
+[
+"Calcul numérique",
+"On travaille avec les nombres rationnels et réels, les puissances, les racines et les priorités de calcul.",
+"√49 = ?",
+"7"
+],
+
+[
+"Racine carrée",
+"La racine carrée de a est le nombre positif dont le carré vaut a.",
+"√25 = ?",
+"5"
+],
+
+[
+"Thalès",
+"Dans une configuration de Thalès, des longueurs correspondantes sont proportionnelles.",
+"Que sont les longueurs correspondantes ?",
+"Proportionnelles"
+],
+
+[
+"Trigonométrie",
+"Dans un triangle rectangle, cos(angle) = côté adjacent / hypoténuse.",
+"Le cosinus est le rapport de quel côté sur l'hypoténuse ?",
+"Côté adjacent"
+],
+
+[
+"Fonctions",
+"Une fonction associe à chaque nombre de son domaine une unique image.",
+"Si f(x)=2x+1, f(3)=?",
+"7"
+],
+
+[
+"Équations et systèmes",
+"On peut résoudre une équation ou plusieurs équations simultanément pour trouver les inconnues.",
+"x+2=7. x = ?",
+"5"
+],
+
+[
+"Statistiques",
+"Une fréquence est l'effectif d'une valeur divisé par l'effectif total.",
+"Comment calcule-t-on une fréquence ?",
+"Effectif / total"
+],
+
+[
+"Probabilités",
+"Une probabilité est comprise entre 0 et 1.",
+"Une probabilité peut-elle être égale à 2 ?",
+"Non"
+]
+
+],
+
+"2nde":[
+
+[
+"Ensembles de nombres",
+"Les nombres naturels, entiers, rationnels et réels forment des ensembles emboîtés.",
+"3, -2 et 1/4 sont-ils des réels ?",
+"Oui"
+],
+
+[
+"Calcul algébrique",
+"On développe et réduit les expressions pour les transformer.",
+"(x+2)(x+3) = ?",
+"x²+5x+6"
+],
+
+[
+"Fonctions",
+"Une fonction associe à un nombre une unique image.",
+"Combien d'images une fonction associe-t-elle à un nombre ?",
+"Une"
+],
+
+[
+"Fonction affine",
+"Une fonction affine s'écrit f(x)=ax+b.",
+"Quelle est la forme d'une fonction affine ?",
+"ax+b"
+],
+
+[
+"Vecteurs",
+"Un vecteur possède notamment une direction, un sens et une longueur.",
+"Quelle propriété décrit l'orientation d'un vecteur ?",
+"Direction"
+],
+
+[
+"Statistiques",
+"La médiane partage une série ordonnée en deux parties de même effectif, autant que possible.",
+"Que fait la médiane ?",
+"Partage la série en deux"
+],
+
+[
+"Probabilités",
+"Pour une équiprobabilité, P(A)=nombre de cas favorables/nombre de cas possibles.",
+"Une probabilité peut-elle être 2 ?",
+"Non"
+]
+
+],
+
+"1ère":[
+
+[
+"Suites numériques",
+"Une suite arithmétique possède une différence constante entre deux termes consécutifs.",
+"Quelle est la propriété d'une suite arithmétique ?",
+"Différence constante"
+],
+
+[
+"Dérivation",
+"La dérivée mesure le taux de variation local d'une fonction.",
+"Si f(x)=x², f'(x)=?",
+"2x"
+],
+
+[
+"Étude de fonctions",
+"Le signe de la dérivée permet d'étudier les variations d'une fonction.",
+"Si f'>0, la fonction est-elle croissante ?",
+"Oui"
+],
+
+[
+"Exponentielle",
+"La fonction exponentielle vérifie notamment exp(0)=1.",
+"exp(0)=?",
+"1"
+],
+
+[
+"Logarithme",
+"Le logarithme népérien est défini sur les réels strictement positifs et ln(1)=0.",
+"ln(1)=?",
+"0"
+],
+
+[
+"Probabilités",
+"Une variable aléatoire associe une valeur réelle à chaque issue d'une expérience aléatoire.",
+"Que fait une variable aléatoire ?",
+"Associe une valeur réelle"
+],
+
+[
+"Géométrie dans l'espace",
+"Dans l'espace, on peut repérer un point avec trois coordonnées.",
+"Combien de coordonnées faut-il dans l'espace ?",
+"3"
+]
+
+],
+
+"Terminale":[
+
+[
+"Limites de fonctions",
+"Une limite décrit le comportement d'une fonction lorsque x se rapproche d'une valeur ou tend vers l'infini.",
+"Que décrit une limite ?",
+"Le comportement de la fonction"
+],
+
+[
+"Continuité",
+"Une fonction continue se comporte sans rupture sur l'intervalle considéré.",
+"Une fonction continue a-t-elle une rupture ?",
+"Non"
+],
+
+[
+"Dérivation et études de fonctions",
+"Le signe de la dérivée permet de déterminer les variations.",
+"Si f'<0, la fonction est-elle décroissante ?",
+"Oui"
+],
+
+[
+"Logarithme népérien",
+"Le logarithme népérien est défini sur les réels strictement positifs.",
+"Sur quel ensemble ln(x) est-il défini ?",
+"x>0"
+],
+
+[
+"Exponentielle",
+"La fonction exponentielle est positive et vérifie exp(x+y)=exp(x)exp(y) et exp(0)=1.",
+"exp(0)=?",
+"1"
+],
+
+[
+"Probabilités",
+"Toute probabilité est comprise entre 0 et 1.",
+"Une probabilité peut-elle être 1,5 ?",
+"Non"
+],
+
+[
+"Équations différentielles",
+"Une équation différentielle contient une fonction inconnue et au moins une de ses dérivées.",
+"Donne un exemple simple.",
+"y'=ay"
+],
+
+[
+"Intégrales",
+"Si F est une primitive de f, alors l'intégrale de a à b de f vaut F(b)-F(a).",
+"Si F'=f, que vaut l'intégrale de a à b de f ?",
+"F(b)-F(a)"
+],
+
+[
+"Nombres complexes",
+"Un nombre complexe s'écrit z=a+ib avec i²=-1.",
+"Dans z=3+2i, quelle est la partie réelle ?",
+"3"
+],
+
+[
+"Trigonométrie",
+"Pour tout réel x, sin²(x)+cos²(x)=1.",
+"sin²(x)+cos²(x)=?",
+"1"
+]
+
+]
+
+};
+
+
+/* =========================================================
+   ÉTAT DE L'APPLICATION
+========================================================= */
+
+let user =
+JSON.parse(localStorage.getItem("mathquestUser") || "null")
+||
+{
+  prenom:"",
+  nom:"",
+  age:"",
+  avatar:"👦",
+  classe:"",
+  xp:0,
+  streak:0,
+  completedLessons:[],
+  completedExercises:[],
+  lastActivity:"",
+  workText:"",
+  workSaved:false
+};
+
+let selectedClass = user.classe || "";
+let selectedLesson = null;
+let exerciseIndex = 0;
+let currentExercises = [];
+let selectedAvatar = user.avatar || "👦";
+let voices = [];
+
+
+/* =========================================================
+   SAUVEGARDE
+========================================================= */
+
+function save(){
+  localStorage.setItem(
+    "mathquestUser",
+    JSON.stringify(user)
+  );
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showScreen(id){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(screen=>{
+      screen.classList.remove("active");
+    });
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================================================
+   CLASSES
+========================================================= */
+
+function showClassScreen(){
+
+  renderClasses();
+
+  showScreen("classScreen");
+}
+
+
+function renderClasses(){
+
+  document.getElementById("classes").innerHTML =
+  Object.keys(courses)
+  .map(classe=>`
+
+    <button
+      class="class-btn"
+      onclick="selectClass('${classe}')"
+    >
+      🎓
+      <br>
+      ${classe}
+    </button>
+
+  `)
+  .join("");
+}
+
+
+function selectClass(classe){
+
+  selectedClass = classe;
+
+  if(user.prenom){
+
+    user.classe = classe;
+
+    save();
+
+    updateHome();
+
+    showHome();
+
+  }else{
+
+    document.getElementById("profileClass")
+      .textContent = classe;
+
+    showScreen("profileScreen");
+  }
+}
+
+
+/* =========================================================
+   PROFIL
+========================================================= */
+
+function chooseAvatar(avatar){
+
+  selectedAvatar = avatar;
+
+  document
+    .getElementById("boy")
+    .classList.toggle(
+      "selected",
+      avatar==="👦"
+    );
+
+  document
+    .getElementById("girl")
+    .classList.toggle(
+      "selected",
+      avatar==="👧"
+    );
+}
+
+
+function createProfile(){
+
+  const prenom =
+    document.getElementById("prenom")
+    .value
+    .trim();
+
+  const nom =
+    document.getElementById("nom")
+    .value
+    .trim();
+
+  const age =
+    document.getElementById("age")
+    .value;
+
+  if(!prenom || !nom){
+
+    alert("Entre ton prénom et ton nom.");
+
+    return;
+  }
+
+  user.prenom = prenom;
+  user.nom = nom;
+  user.age = age;
+  user.avatar = selectedAvatar;
+  user.classe = selectedClass;
+
+  save();
+
+  showHome();
+}
+
+
+/* =========================================================
+   ACCUEIL
+========================================================= */
+
+function showHome(){
+
+  updateHome();
+
+  showScreen("homeScreen");
+}
+
+
+function updateHome(){
+
+  document.getElementById("topXp")
+    .textContent = user.xp;
+
+  document.getElementById("topStreak")
+    .textContent = user.streak;
+
+
+  document.getElementById("welcome")
+    .textContent =
+    `Bonjour ${user.prenom || ""} ${user.avatar}`;
+
+
+  const total =
+    Object.values(courses)
+    .flat()
+    .length;
+
+  const done =
+    user.completedLessons.length;
+
+  const percent =
+    Math.round((done / total) * 100);
+
+
+  document.getElementById("homeBar")
+    .style.width = percent + "%";
+
+  document.getElementById("homeProgress")
+    .textContent =
+    percent + "% du parcours";
+
+
+  let message;
+
+  if(percent >= 80){
+
+    message =
+      "Tu es incroyable ! Continue jusqu'au bout. 🏆";
+
+  }else if(percent >= 40){
+
+    message =
+      "Ton aventure avance très bien ! Continue comme ça. 🚀";
+
+  }else{
+
+    message =
+      "Chaque leçon te rend plus fort en maths ! 💪";
+  }
+
+  document.getElementById("mathoMessage")
+    .textContent = message;
+
+
+  const next =
+    Object.entries(courses)
+    .flatMap(([classe,lessons])=>
+      lessons.map((lesson,index)=>({
+        classe,
+        index,
+        lesson
+      }))
+    )
+    .find(item=>
+      !user.completedLessons.includes(
+        item.classe + "-" + item.index
+      )
+    );
+
+
+  document.getElementById("nextMission")
+    .textContent =
+    next
+    ?
+    `Prochaine étape : ${next.lesson[0]} (${next.classe}).`
+    :
+    "🎉 Toutes les leçons actuelles sont terminées !";
+}
+
+
+/* =========================================================
+   COURS
+========================================================= */
+
+function showCourses(){
+
+  const lessons =
+    courses[user.classe] || [];
+
+  document.getElementById("coursesTitle")
+    .textContent =
+    `Cours de ${user.classe}`;
+
+
+  document.getElementById("courseList")
+    .innerHTML =
+    lessons
+    .map((lesson,index)=>{
+
+      const key =
+        user.classe + "-" + index;
+
+      const done =
+        user.completedLessons.includes(key);
+
+      return `
+
+        <div class="course">
+
+          <div>
+
+            <h3>
+              ${done ? "✅" : "📘"}
+              ${index+1}. ${lesson[0]}
+            </h3>
+
+            <p>
+              ${lesson[1]}
+            </p>
+
+          </div>
+
+          <button
+            class="small-btn"
+            onclick="openLesson(${index})"
+          >
+            ${done ? "Revoir" : "Apprendre"}
+          </button>
+
+        </div>
+
+      `;
+
+    })
+    .join("");
+
+
+  showScreen("coursesScreen");
+}
+
+
+/* =========================================================
+   LEÇON
+========================================================= */
+
+function openLesson(index){
+
+  selectedLesson = index;
+
+  const lesson =
+    courses[user.classe][index];
+
+
+  document.getElementById("lessonContent")
+    .innerHTML = `
+
+      <h2>${lesson[0]}</h2>
+
+      <div class="pill">
+        🎓 ${user.classe}
+        · Leçon ${index+1}
+      </div>
+
+
+      <div class="audio">
+
+        <b>🔊 Lecture du cours</b>
+
+        <div class="field">
+
+          <label>Voix</label>
+
+          <select id="voiceSelect"></select>
+
+        </div>
+
+
+        <label>
+          Vitesse :
+          <span id="rateValue">0.9</span>
+        </label>
+
+        <input
+          id="rate"
+          class="range"
+          type="range"
+          min="0.6"
+          max="1.2"
+          step="0.05"
+          value="0.9"
+          oninput="
+            document.getElementById('rateValue')
+            .textContent=this.value
+          "
+        >
+
+
+        <div class="audio-buttons">
+
+          <button onclick="speakLesson()">
+            ▶️ Écouter
+          </button>
+
+          <button onclick="pauseSpeech()">
+            ⏸️ Pause
+          </button>
+
+          <button onclick="resumeSpeech()">
+            ▶️ Reprendre
+          </button>
+
+          <button onclick="stopSpeech()">
+            ⏹️ Stop
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <h3>🎯 Objectif</h3>
+
+      <p>
+        Comprendre
+        ${lesson[0].toLowerCase()}
+        et savoir appliquer la notion.
+      </p>
+
+
+      <h3>📚 Explication</h3>
+
+      <p>
+        ${lesson[1]}
+      </p>
+
+
+      <h3>🧠 Exemple / question</h3>
+
+      <div class="example">
+        ${lesson[2]}
+      </div>
+
+
+      <h3>💡 À retenir</h3>
+
+      <p>
+        ${lesson[3]}
+      </p>
+
+
+      <button
+        class="btn primary"
+        onclick="completeLesson()"
+      >
+        ✅ J'ai terminé la leçon (+10 XP)
+      </button>
+
+    `;
+
+
+  populateVoices();
+
+  showScreen("lessonScreen");
+}
+
+
+/* =========================================================
+   VOIX
+========================================================= */
+
+function getSpeechText(){
+
+  const lesson =
+    courses[user.classe][selectedLesson];
+
+  return `
+
+    Bonjour, je suis Matho.
+
+    Aujourd'hui nous allons apprendre :
+    ${lesson[0]}.
+
+    Objectif :
+    comprendre cette notion.
+
+    ${lesson[1]}
+
+    Voici une question :
+    ${lesson[2]}
+
+    À retenir :
+    ${lesson[3]}.
+
+    Bravo ! Continue tes efforts.
+
+  `;
+}
+
+
+function loadVoices(){
+
+  voices =
+    window.speechSynthesis
+    .getVoices() || [];
+}
+
+
+function populateVoices(){
+
+  loadVoices();
+
+  const select =
+    document.getElementById("voiceSelect");
+
+  if(!select) return;
+
+
+  const frenchVoices =
+    voices.filter(
+      voice =>
+      voice.lang &&
+      voice.lang
+        .toLowerCase()
+        .startsWith("fr")
+    );
+
+
+  const list =
+    frenchVoices.length
+    ? frenchVoices
+    : voices;
+
+
+  select.innerHTML =
+    list
+    .map(voice=>`
+
+      <option value="${voice.name
+        .replace(/"/g,"&quot;")}">
+
+        ${voice.name}
+        — ${voice.lang}
+
+      </option>
+
+    `)
+    .join("");
+
+
+  const best =
+    frenchVoices.find(
+      voice =>
+      /google|microsoft|france|français|french/i
+      .test(voice.name)
+    );
+
+
+  if(best){
+
+    select.value = best.name;
+
+  }
+}
+
+
+function speakLesson(){
+
+  stopSpeech();
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      getSpeechText()
+    );
+
+
+  const voiceName =
+    document.getElementById("voiceSelect")
+    ?.value;
+
+
+  utterance.voice =
+    voices.find(
+      voice => voice.name === voiceName
+    )
+    ||
+    voices.find(
+      voice =>
+      voice.lang &&
+      voice.lang
+        .toLowerCase()
+        .startsWith("fr")
+    )
+    ||
+    null;
+
+
+  utterance.lang = "fr-FR";
+
+  utterance.rate =
+    Number(
+      document.getElementById("rate")
+      ?.value || 0.9
+    );
+
+  utterance.pitch = 1;
+
+  utterance.volume = 1;
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+}
+
+
+function pauseSpeech(){
+
+  speechSynthesis.pause();
+}
+
+
+function resumeSpeech(){
+
+  speechSynthesis.resume();
+}
+
+
+function stopSpeech(){
+
+  speechSynthesis.cancel();
+}
+
+
+speechSynthesis.addEventListener(
+  "voiceschanged",
+  loadVoices
+);
+
+
+/* =========================================================
+   XP + SÉRIE
+========================================================= */
+
+function updateActivity(){
+
+  const today =
+    new Date()
+    .toISOString()
+    .slice(0,10);
+
+
+  if(user.lastActivity !== today){
+
+    const yesterday =
+      new Date(
+        Date.now() - 86400000
+      )
+      .toISOString()
+      .slice(0,10);
+
+
+    if(user.lastActivity === yesterday){
+
+      user.streak++;
+
+    }else{
+
+      user.streak = 1;
+
+    }
+
+
+    user.lastActivity = today;
+  }
+
+
+  save();
+}
+
+
+/* =========================================================
+   TERMINER UNE LEÇON
+========================================================= */
+
+function completeLesson(){
+
+  const key =
+    user.classe +
+    "-" +
+    selectedLesson;
+
+
+  if(
+    !user.completedLessons.includes(key)
+  ){
+
+    user.completedLessons.push(key);
+
+    user.xp += 10;
+
+    updateActivity();
+
+  }
+
+
+  showCourses();
+}
+
+
+/* =========================================================
+   EXERCICES
+========================================================= */
+
+function showExercises(){
+
+  currentExercises =
+    (courses[user.classe] || [])
+    .map((lesson,index)=>({
+
+      index,
+      question:lesson[2],
+      answer:lesson[3]
+
+    }));
+
+
+  exerciseIndex = 0;
+
+  loadExercise();
+
+  showScreen("exerciseScreen");
+}
+
+
+function loadExercise(){
+
+  const exercise =
+    currentExercises[exerciseIndex];
+
+
+  if(!exercise){
+
+    showHome();
+
+    return;
+  }
+
+
+  const choices =
+    createChoices(
+      exercise.answer
+    );
+
+
+  document.getElementById("exerciseBox")
+    .innerHTML = `
+
+      <div class="pill">
+        Exercice
+        ${exerciseIndex+1}
+        /
+        ${currentExercises.length}
+      </div>
+
+
+      <h2>
+        ${exercise.question}
+      </h2>
+
+
+      <p class="subtitle">
+        Choisis la bonne réponse.
+      </p>
+
+
+      ${choices.map(choice=>`
+
+        <button
+          class="choice"
+          onclick="answerExercise(
+            this,
+            '${choice
+              .replace(/'/g,"\\'")
+            }'
+          )"
+        >
+          ${choice}
+        </button>
+
+      `).join("")}
+
+
+      <div id="feedback"></div>
+
+    `;
+}
+
+
+function createChoices(answer){
+
+  const choices = [answer];
+
+  const pool = [
+
+    "Oui",
+    "Non",
+    "2",
+    "3",
+    "5",
+    "7",
+    "8",
+    "10",
+    "11",
+    "12",
+    "30",
+    "90°",
+    "1000 F",
+    "1/2",
+    "3/4",
+    "5x",
+    "2x",
+    "ax+b",
+    "Direction",
+    "Côté adjacent",
+    "Proportionnelles",
+    "Une",
+    "Deux",
+    "Non",
+    "1",
+    "2"
+  ];
+
+
+  for(const item of pool){
+
+    if(!choices.includes(item)){
+
+      choices.push(item);
+
+    }
+
+    if(choices.length >= 4){
+
+      break;
+    }
+  }
+
+
+  return choices.sort(
+    ()=>Math.random()-.5
+  );
+}
+
+
+function answerExercise(
+  button,
+  value
+){
+
+  const exercise =
+    currentExercises[exerciseIndex];
+
+
+  const correct =
+    value === exercise.answer;
+
+
+  document
+    .querySelectorAll(".choice")
+    .forEach(
+      button => button.disabled=true
+    );
+
+
+  button.classList.add(
+    correct
+    ? "correct"
+    : "wrong"
+  );
+
+
+  const feedback =
+    document.getElementById("feedback");
+
+
+  feedback.innerHTML = `
+
+    <div
+      class="feedback"
+      style="
+        background:
+        ${correct
+          ? "#efffe7"
+          : "#fff0f0"}
+      "
+    >
+
+      ${
+        correct
+        ?
+        "🎉 Bravo ! +10 XP"
+        :
+        "❌ Pas encore. La réponse attendue est : "
+        + exercise.answer
+      }
+
+    </div>
+
+
+    <button
+      class="btn primary"
+      onclick="nextExercise()"
+    >
+
+      ${
+        exerciseIndex ===
+        currentExercises.length-1
+        ?
+        "Terminer"
+        :
+        "Question suivante →"
+      }
+
+    </button>
+
+  `;
+
+
+  if(correct){
+
+    const key =
+      user.classe +
+      "-e-" +
+      exercise.index;
+
+
+    if(
+      !user.completedExercises
+      .includes(key)
+    ){
+
+      user.completedExercises
+        .push(key);
+
+      user.xp += 10;
+
+      updateActivity();
+
+    }
+
+  }
+}
+
+
+function nextExercise(){
+
+  exerciseIndex++;
+
+
+  if(
+    exerciseIndex >=
+    currentExercises.length
+  ){
+
+    showHome();
+
+  }else{
+
+    loadExercise();
+
+  }
+}
+
+
+/* =========================================================
+   PROGRESSION
+========================================================= */
+
+function showProgress(){
+
+  const total =
+    Object.values(courses)
+    .flat()
+    .length;
+
+
+  const percent =
+    Math.round(
+      user.completedLessons.length /
+      total *
+      100
+    );
+
+
+  document.getElementById("pXp")
+    .textContent = user.xp;
+
+
+  document.getElementById("pPercent")
+    .textContent = percent + "%";
+
+
+  document.getElementById("pBar")
+    .style.width = percent + "%";
+
+
+  document.getElementById("pStreak")
+    .textContent = user.streak;
+
+
+  renderBadges();
+
+  showScreen("progressScreen");
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+function renderBadges(){
+
+  const badges = [
+
+    [
+      "🌱",
+      "Premier pas",
+      user.xp >= 10
+    ],
+
+    [
+      "📚",
+      "Apprenant",
+      user.completedLessons.length >= 3
+    ],
+
+    [
+      "🔥",
+      "Série",
+      user.streak >= 5
+    ],
+
+    [
+      "🏆",
+      "100 XP",
+      user.xp >= 100
+    ],
+
+    [
+      "🎯",
+      "10 leçons",
+      user.completedLessons.length >= 10
+    ],
+
+    [
+      "🚀",
+      "Champion",
+      user.completedLessons.length >= 20
+    ]
+
+  ];
+
+
+  document.getElementById("badgeList")
+    .innerHTML =
+    badges
+    .map(badge=>`
+
+      <div
+        class="badge
+        ${badge[2] ? "" : "locked"}"
+      >
+
+        <div style="font-size:35px">
+          ${badge[0]}
+        </div>
+
+        <b>${badge[1]}</b>
+
+        <p>
+          ${badge[2]
+            ? "Débloqué"
+            : "À débloquer"}
+        </p>
+
+      </div>
+
+    `)
+    .join("");
+}
+
+
+function showRewards(){
+
+  renderBadges();
+
+  document.getElementById("rewardsList")
+    .innerHTML =
+    document.getElementById("badgeList")
+    .innerHTML;
+
+
+  showScreen("rewardsScreen");
+}
+
+
+/* =========================================================
+   MON TRAVAIL
+========================================================= */
+
+function previewWork(event){
+
+  const file =
+    event.target.files[0];
+
+  const image =
+    document.getElementById("workPreview");
+
+
+  if(!file) return;
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(){
+
+    image.src =
+      reader.result;
+
+    image.style.display =
+      "block";
+
+  };
+
+
+  reader.readAsDataURL(file);
+}
+
+
+function showWork(){
+
+  document.getElementById("workText")
+    .value =
+    user.workText || "";
+
+
+  showScreen("workScreen");
+}
+
+
+function saveWork(){
+
+  user.workText =
+    document.getElementById("workText")
+    .value;
+
+
+  user.workSaved = true;
+
+  user.xp += 5;
+
+  save();
+
+
+  document.getElementById("workMsg")
+    .innerHTML = `
+
+      <div class="notice">
+
+        ✅ Ton travail a été enregistré
+        sur cet appareil.
+        <br>
+        ⭐ +5 XP
+
+      </div>
+
+    `;
+}
+
+
+/* =========================================================
+   PROFIL
+========================================================= */
+
+function showProfile(){
+
+  document.getElementById("profileAvatar")
+    .textContent = user.avatar;
+
+
+  document.getElementById("profileName")
+    .textContent =
+    `${user.prenom} ${user.nom}`;
+
+
+  document.getElementById("profileClassView")
+    .textContent = user.classe;
+
+
+  document.getElementById("profileAge")
+    .textContent =
+    user.age || "—";
+
+
+  showScreen("profileViewScreen");
+}
+
+
+function changeClass(){
+
+  renderClasses();
+
+  showScreen("classScreen");
+}
+
+
+/* =========================================================
+   RÉINITIALISATION
+========================================================= */
+
+function resetApp(){
+
+  const confirmation =
+    confirm(
+      "Réinitialiser ton profil et toute ta progression ?"
+    );
+
+
+  if(!confirmation) return;
+
+
+  localStorage.removeItem(
+    "mathquestUser"
+  );
+
+
+  location.reload();
+}
+
+
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+function init(){
+
+  loadVoices();
+
+
+  if(
+    user.prenom &&
+    user.classe
+  ){
+
+    showHome();
+
+  }else{
+
+    showScreen("startScreen");
+
+  }
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

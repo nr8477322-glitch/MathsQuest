@@ -1,0 +1,2758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#58cc02">
+<title>MathQuest 🇧🇫</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --green:#58cc02;
+  --green-dark:#46a800;
+  --blue:#1cb0f6;
+  --orange:#ff9600;
+  --purple:#ce82ff;
+  --red:#ff4b4b;
+  --bg:#f6f7fb;
+  --text:#263238;
+  --muted:#667085;
+  --white:#fff;
+  --border:#e5e7eb;
+  --shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,textarea{font:inherit}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+}
+
+.screen.active{
+  display:block;
+}
+
+/* START */
+
+.start{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  background:linear-gradient(135deg,#eaffdf,#f4fbff);
+}
+
+.start-card{
+  width:100%;
+  max-width:600px;
+  background:white;
+  border-radius:30px;
+  padding:35px 25px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.logo{
+  font-size:42px;
+  font-weight:900;
+  color:var(--green);
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:25px;
+}
+
+.mascot{
+  width:180px;
+  height:180px;
+  object-fit:contain;
+  margin:10px auto 20px;
+}
+
+.main-btn{
+  width:100%;
+  padding:16px;
+  border-radius:16px;
+  background:var(--green);
+  color:white;
+  font-weight:800;
+  font-size:18px;
+  box-shadow:0 5px 0 var(--green-dark);
+  margin-top:10px;
+}
+
+.main-btn:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 var(--green-dark);
+}
+
+/* HEADER */
+
+.header{
+  background:white;
+  border-bottom:1px solid var(--border);
+  padding:15px 18px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.brand{
+  color:var(--green);
+  font-weight:900;
+  font-size:23px;
+}
+
+.header-stats{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.stat-mini{
+  background:#f3f4f6;
+  border-radius:12px;
+  padding:8px 11px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+/* CONTAINER */
+
+.container{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding:25px 18px 60px;
+}
+
+/* CLASS */
+
+.section-title{
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.section-subtitle{
+  color:var(--muted);
+  margin-bottom:22px;
+  line-height:1.5;
+}
+
+.class-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:14px;
+}
+
+.class-card{
+  background:white;
+  border:2px solid var(--border);
+  border-radius:20px;
+  padding:24px 12px;
+  text-align:center;
+  transition:.2s;
+}
+
+.class-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--green);
+}
+
+.class-number{
+  font-size:28px;
+  font-weight:900;
+  color:var(--green);
+  margin-bottom:8px;
+}
+
+.class-desc{
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* FORM */
+
+.form-card{
+  max-width:650px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.field{
+  margin-bottom:18px;
+}
+
+.field label{
+  display:block;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.field input,
+.field textarea{
+  width:100%;
+  padding:14px;
+  border:2px solid var(--border);
+  border-radius:13px;
+  outline:none;
+}
+
+.field input:focus,
+.field textarea:focus{
+  border-color:var(--green);
+}
+
+.avatar-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.avatar-btn{
+  padding:20px;
+  border:2px solid var(--border);
+  border-radius:18px;
+  background:white;
+  font-size:42px;
+}
+
+.avatar-btn.selected{
+  border-color:var(--green);
+  background:#efffe7;
+}
+
+/* HOME */
+
+.hero{
+  background:linear-gradient(135deg,#eaffdf,#f0faff);
+  border-radius:25px;
+  padding:25px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.hero img{
+  width:150px;
+  height:150px;
+  object-fit:contain;
+}
+
+.hero h1{
+  margin-bottom:8px;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.big-stat{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.big-stat strong{
+  display:block;
+  font-size:25px;
+  color:var(--green);
+  margin-bottom:5px;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.menu-card{
+  background:white;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  border:2px solid transparent;
+}
+
+.menu-card:hover{
+  border-color:var(--green);
+}
+
+.menu-icon{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.menu-card h3{
+  margin-bottom:7px;
+}
+
+.menu-card p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* COURSES */
+
+.course-list{
+  display:grid;
+  gap:13px;
+}
+
+.course-card{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  border:2px solid var(--border);
+}
+
+.course-card h3{
+  margin-bottom:7px;
+}
+
+.course-card p{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:13px;
+}
+
+.small-btn{
+  background:var(--green);
+  color:white;
+  padding:11px 15px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.blue-btn{
+  background:var(--blue);
+}
+
+.orange-btn{
+  background:var(--orange);
+}
+
+/* LESSON */
+
+.lesson{
+  max-width:850px;
+  margin:auto;
+}
+
+.lesson-card{
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:var(--shadow);
+}
+
+.lesson-card h1{
+  margin-bottom:10px;
+}
+
+.lesson-meta{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.lesson-content{
+  line-height:1.75;
+}
+
+.lesson-content h2{
+  margin:22px 0 8px;
+  color:var(--green-dark);
+}
+
+.lesson-content h3{
+  margin:18px 0 7px;
+}
+
+.lesson-content ul{
+  margin:10px 0 10px 22px;
+}
+
+.example{
+  background:#f0ffe9;
+  border-left:5px solid var(--green);
+  padding:15px;
+  margin:15px 0;
+  border-radius:10px;
+}
+
+.audio-box{
+  background:#f5f7fa;
+  border-radius:18px;
+  padding:15px;
+  margin:20px 0;
+}
+
+.audio-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.audio-status{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* EXERCISES */
+
+.exercise-card{
+  max-width:700px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.choice{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:15px;
+  margin:10px 0;
+  background:#f8fafc;
+  border:2px solid var(--border);
+  border-radius:14px;
+}
+
+.choice:hover{
+  border-color:var(--blue);
+}
+
+.feedback{
+  padding:15px;
+  border-radius:14px;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+.correct{
+  background:#eaffdf;
+  color:#2f7d00;
+}
+
+.wrong{
+  background:#ffe8e8;
+  color:#b00000;
+}
+
+/* PROGRESS */
+
+.progress{
+  height:15px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  background:var(--green);
+  width:0%;
+  transition:.4s;
+}
+
+.badges{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+}
+
+.badge{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.badge.locked{
+  opacity:.4;
+  filter:grayscale(1);
+}
+
+.badge-icon{
+  font-size:38px;
+  margin-bottom:8px;
+}
+
+/* WORK */
+
+.work-card{
+  background:white;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.back-btn{
+  background:#e9ecef;
+  color:#333;
+  padding:11px 15px;
+  border-radius:12px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+  .hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .header-inner{
+    align-items:flex-start;
+  }
+
+  .brand{
+    font-size:19px;
+  }
+
+  .header-stats{
+    max-width:180px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<section id="startScreen" class="screen active">
+  <div class="start">
+    <div class="start-card">
+      <div class="logo">🦜 MathQuest</div>
+      <p class="subtitle">
+        Apprends les mathématiques, écoute les cours,
+        fais des exercices et progresse à ton rythme.
+      </p>
+
+      <img
+        src="matho-1.png"
+        class="mascot"
+        alt="Matho"
+        onerror="this.style.display='none'"
+      >
+
+      <button class="main-btn" onclick="showClassScreen()">
+        🚀 Commencer
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CLASS -->
+<section id="classScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">🦜 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="section-title">Choisis ta classe</h1>
+    <p class="section-subtitle">
+      Sélectionne ton niveau pour découvrir tes cours et exercices.
+    </p>
+
+    <div id="classGrid" class="class-grid"></div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profileScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">🦜 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="form-card">
+      <h1 class="section-title">Ton profil</h1>
+      <p class="section-subtitle">
+        Créons ton profil MathQuest.
+      </p>
+
+      <div class="field">
+        <label>Prénom</label>
+        <input id="prenom" placeholder="Ton prénom">
+      </div>
+
+      <div class="field">
+        <label>Nom</label>
+        <input id="nom" placeholder="Ton nom">
+      </div>
+
+      <div class="field">
+        <label>Âge</label>
+        <input id="age" type="number" min="5" max="25" placeholder="Ton âge">
+      </div>
+
+      <div class="field">
+        <label>Choisis ton avatar</label>
+
+        <div class="avatar-grid">
+          <button id="boyAvatar" class="avatar-btn" onclick="chooseAvatar('👦')">
+            👦
+          </button>
+
+          <button id="girlAvatar" class="avatar-btn" onclick="chooseAvatar('👧')">
+            👧
+          </button>
+        </div>
+      </div>
+
+      <button class="main-btn" onclick="createProfile()">
+        Continuer
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- HOME -->
+<section id="homeScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">🦜 MathQuest</div>
+
+      <div class="header-stats">
+        <div class="stat-mini">⭐ <span id="topXP">0</span> XP</div>
+        <div class="stat-mini">🔥 <span id="topStreak">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="hero">
+      <img
+        src="matho-1.png"
+        alt="Matho"
+        onerror="this.style.display='none'"
+      >
+
+      <div>
+        <h1>Bonjour <span id="welcomeName">élève</span> 👋</h1>
+        <p>
+          Bienvenue dans MathQuest !<br>
+          Classe : <strong id="homeClass">6e</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="big-stat">
+        <strong id="homeXP">0</strong>
+        XP
+      </div>
+
+      <div class="big-stat">
+        <strong id="homeStreak">0</strong>
+        🔥 Série
+      </div>
+
+      <div class="big-stat">
+        <strong id="homeProgress">0%</strong>
+        Progression
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <div class="menu-card" onclick="showCourses()">
+        <div class="menu-icon">📚</div>
+        <h3>Cours</h3>
+        <p>
+          Apprends les notions de ta classe et écoute les explications.
+        </p>
+      </div>
+
+      <div class="menu-card" onclick="showExercises()">
+        <div class="menu-icon">✏️</div>
+        <h3>Exercices</h3>
+        <p>
+          Entraîne-toi avec des exercices interactifs.
+        </p>
+      </div>
+
+      <div class="menu-card" onclick="showProgress()">
+        <div class="menu-icon">📈</div>
+        <h3>Ma progression</h3>
+        <p>
+          Consulte tes XP, ta progression et tes badges.
+        </p>
+      </div>
+
+      <div class="menu-card" onclick="showWork()">
+        <div class="menu-icon">📷</div>
+        <h3>Montrer mon travail</h3>
+        <p>
+          Ajoute une photo de ton travail et explique ton raisonnement.
+        </p>
+      </div>
+
+      <div class="menu-card" onclick="showProfile()">
+        <div class="menu-icon">👤</div>
+        <h3>Mon profil</h3>
+        <p>
+          Consulte tes informations et change de classe.
+        </p>
+      </div>
+
+      <div class="menu-card" onclick="showRewards()">
+        <div class="menu-icon">🏆</div>
+        <h3>Récompenses</h3>
+        <p>
+          Découvre les badges que tu as débloqués.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="coursesScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">📚 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <button class="back-btn" onclick="showHome()">← Accueil</button>
+
+    <h1 class="section-title">
+      Cours de <span id="coursesClass"></span>
+    </h1>
+
+    <p class="section-subtitle">
+      Choisis une leçon. Tu peux ensuite l'écouter avec la voix de ton téléphone.
+    </p>
+
+    <div id="courseList" class="course-list"></div>
+  </div>
+</section>
+
+<!-- LESSON -->
+<section id="lessonScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">🦜 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="lesson">
+
+      <button class="back-btn" onclick="showCourses()">
+        ← Retour aux cours
+      </button>
+
+      <div class="lesson-card">
+
+        <h1 id="lessonTitle"></h1>
+
+        <div class="lesson-meta" id="lessonMeta"></div>
+
+        <div class="audio-box">
+
+          <strong>🔊 Écouter ce cours</strong>
+
+          <div class="audio-controls">
+
+            <button class="small-btn" onclick="speakLesson()">
+              ▶️ Écouter
+            </button>
+
+            <button class="small-btn blue-btn" onclick="pauseSpeech()">
+              ⏸️ Pause
+            </button>
+
+            <button class="small-btn orange-btn" onclick="resumeSpeech()">
+              ▶️ Reprendre
+            </button>
+
+            <button class="small-btn" style="background:#ff4b4b" onclick="stopSpeech()">
+              ⏹️ Arrêter
+            </button>
+
+          </div>
+
+          <div class="audio-status" id="audioStatus">
+            Prêt à lire le cours.
+          </div>
+
+        </div>
+
+        <div id="lessonContent" class="lesson-content"></div>
+
+        <button class="main-btn" onclick="completeLesson()">
+          ✅ J'ai terminé ce cours
+        </button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXERCISES -->
+<section id="exerciseScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">✏️ MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <button class="back-btn" onclick="showHome()">← Accueil</button>
+
+    <div class="exercise-card">
+
+      <h1 id="exerciseTitle">Exercice</h1>
+
+      <p id="exerciseQuestion" style="margin:20px 0;line-height:1.6"></p>
+
+      <div id="choices"></div>
+
+      <div id="feedback"></div>
+
+      <button
+        id="nextExerciseBtn"
+        class="main-btn"
+        style="display:none"
+        onclick="nextExercise()"
+      >
+        Exercice suivant →
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<section id="progressScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">📈 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <button class="back-btn" onclick="showHome()">← Accueil</button>
+
+    <h1 class="section-title">Ma progression</h1>
+
+    <p class="section-subtitle">
+      Continue tes cours et tes exercices pour progresser.
+    </p>
+
+    <div class="big-stat" style="margin-bottom:20px">
+      <strong id="progressXP">0</strong>
+      XP gagnés
+    </div>
+
+    <div class="big-stat" style="margin-bottom:20px">
+      <strong id="progressPercent">0%</strong>
+
+      <div class="progress" style="margin-top:12px">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+    </div>
+
+    <h2 style="margin:25px 0 15px">🏆 Mes badges</h2>
+
+    <div id="badges" class="badges"></div>
+
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="workScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">📷 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <button class="back-btn" onclick="showHome()">← Accueil</button>
+
+    <div class="work-card">
+
+      <h1 class="section-title">Montrer mon travail</h1>
+
+      <p class="section-subtitle">
+        Ajoute une photo de ton exercice et explique comment tu as raisonné.
+      </p>
+
+      <div class="field">
+        <label>Photo de ton travail</label>
+        <input id="workPhoto" type="file" accept="image/*">
+      </div>
+
+      <div class="field">
+        <label>Mon raisonnement</label>
+
+        <textarea
+          id="workText"
+          rows="7"
+          placeholder="Explique les étapes que tu as suivies..."
+        ></textarea>
+      </div>
+
+      <button class="main-btn" onclick="saveWork()">
+        💾 Enregistrer mon travail
+      </button>
+
+      <p id="workMessage" style="margin-top:15px;color:var(--green-dark)"></p>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE VIEW -->
+<section id="profileViewScreen" class="screen">
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">👤 MathQuest</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <button class="back-btn" onclick="showHome()">← Accueil</button>
+
+    <div class="form-card">
+
+      <h1 class="section-title">Mon profil</h1>
+
+      <div style="font-size:60px;text-align:center;margin:20px" id="profileAvatar">
+        👦
+      </div>
+
+      <p><strong>Prénom :</strong> <span id="profilePrenom"></span></p>
+      <p style="margin-top:10px"><strong>Nom :</strong> <span id="profileNom"></span></p>
+      <p style="margin-top:10px"><strong>Âge :</strong> <span id="profileAge"></span></p>
+      <p style="margin-top:10px"><strong>Classe :</strong> <span id="profileClasse"></span></p>
+
+      <button class="main-btn" onclick="changeClass()">
+        🔄 Changer de classe
+      </button>
+
+      <button
+        class="main-btn"
+        style="background:#ff4b4b;box-shadow:0 5px 0 #c92828"
+        onclick="resetApp()"
+      >
+        🗑️ Réinitialiser ma progression
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<script>
+
+/* ============================================================
+   MATHQUEST
+   DONNÉES
+============================================================ */
+
+const classes = [
+  "6e",
+  "5e",
+  "4e",
+  "3e",
+  "2nde",
+  "1ère",
+  "Terminale"
+];
+
+/*
+  Les cours ci-dessous sont des explications originales.
+  Ils sont organisés à partir des thèmes des ressources
+  pédagogiques publiques du Burkina Faso.
+*/
+
+const courses = {
+
+/* ======================= 6e ======================= */
+
+"6e":[
+
+{
+title:"Les nombres entiers et décimaux",
+text:`
+<h2>Objectif</h2>
+<p>Comprendre les nombres entiers et les nombres décimaux et savoir les comparer.</p>
+
+<h2>À retenir</h2>
+<p>Un nombre entier n'a pas de partie décimale. Exemple : 7, 25 ou 120.</p>
+<p>Un nombre décimal possède une partie entière et éventuellement une partie décimale.</p>
+
+<div class="example">
+<strong>Exemple :</strong><br>
+Dans 12,45, 12 est la partie entière et 45 représente les centièmes.
+</div>
+
+<h2>Comparer</h2>
+<p>Pour comparer deux nombres décimaux, on compare d'abord leurs parties entières. Si elles sont égales, on compare les chiffres après la virgule.</p>
+`,
+exercise:[
+["Quel nombre est le plus grand ?",["2,5","2,8","2,3","2,1"],1]
+]
+},
+
+{
+title:"Les opérations",
+text:`
+<h2>Les quatre opérations</h2>
+<p>Les quatre opérations sont l'addition, la soustraction, la multiplication et la division.</p>
+
+<h2>Priorités</h2>
+<p>Dans une expression contenant plusieurs opérations, la multiplication et la division sont effectuées avant l'addition et la soustraction.</p>
+
+<div class="example">
+<strong>Exemple :</strong><br>
+3 + 4 × 2 = 3 + 8 = 11.
+</div>
+
+<h2>Parenthèses</h2>
+<p>Les calculs placés entre parenthèses sont effectués en priorité.</p>
+`,
+exercise:[
+["Combien vaut 3 + 4 × 2 ?",["14","11","10","9"],1]
+]
+},
+
+{
+title:"Les fractions",
+text:`
+<h2>Comprendre une fraction</h2>
+<p>Une fraction s'écrit a/b. Le nombre a est le numérateur et b est le dénominateur.</p>
+
+<div class="example">
+<strong>Exemple :</strong><br>
+3/4 signifie trois parts lorsque l'unité est divisée en quatre parts égales.
+</div>
+
+<h2>Fraction décimale</h2>
+<p>Une fraction dont le dénominateur est 10, 100, 1000... peut être écrite sous forme décimale.</p>
+`,
+exercise:[
+["Quelle fraction correspond à 0,5 ?",["1/2","1/5","5/100","2/5"],0]
+]
+},
+
+{
+title:"Les angles",
+text:`
+<h2>Définition</h2>
+<p>Un angle est formé par deux demi-droites ayant la même origine.</p>
+
+<h2>Types d'angles</h2>
+<ul>
+<li>Angle aigu : inférieur à 90°.</li>
+<li>Angle droit : égal à 90°.</li>
+<li>Angle obtus : supérieur à 90° et inférieur à 180°.</li>
+<li>Angle plat : égal à 180°.</li>
+</ul>
+`,
+exercise:[
+["Un angle droit mesure :",["45°","90°","120°","180°"],1]
+]
+},
+
+{
+title:"Le triangle",
+text:`
+<h2>Définition</h2>
+<p>Un triangle est un polygone possédant trois côtés et trois sommets.</p>
+
+<h2>Triangles particuliers</h2>
+<ul>
+<li>Triangle équilatéral : trois côtés égaux.</li>
+<li>Triangle isocèle : deux côtés égaux.</li>
+<li>Triangle rectangle : possède un angle droit.</li>
+</ul>
+`,
+exercise:[
+["Combien de côtés possède un triangle ?",["2","3","4","5"],1]
+]
+},
+
+{
+title:"Le parallélogramme",
+text:`
+<h2>Définition</h2>
+<p>Un parallélogramme est un quadrilatère dont les côtés opposés sont parallèles.</p>
+
+<h2>Propriété</h2>
+<p>Ses côtés opposés ont la même longueur.</p>
+
+<p>Le rectangle, le carré et le losange sont des parallélogrammes particuliers.</p>
+`,
+exercise:[
+["Le carré est-il un parallélogramme ?",["Oui","Non","Seulement parfois","Impossible"],0]
+]
+},
+
+{
+title:"Symétrie orthogonale",
+text:`
+<h2>Idée principale</h2>
+<p>Une symétrie orthogonale transforme une figure par rapport à une droite appelée axe de symétrie.</p>
+
+<p>Le point et son image sont à la même distance de l'axe.</p>
+
+<div class="example">
+Si A est un point et A' son symétrique, alors l'axe de symétrie est la médiatrice du segment [AA'].
+</div>
+`,
+exercise:[
+["Comment appelle-t-on la droite utilisée pour une symétrie ?",["Axe","Rayon","Diamètre","Sommet"],0]
+]
+},
+
+{
+title:"Proportionnalité",
+text:`
+<h2>Reconnaître une situation proportionnelle</h2>
+<p>Deux grandeurs sont proportionnelles lorsque l'on passe de l'une à l'autre en multipliant toujours par le même nombre.</p>
+
+<div class="example">
+2 cahiers coûtent 500 F. Alors 4 cahiers coûtent 1000 F si le prix est proportionnel.
+</div>
+`,
+exercise:[
+["Si 2 objets coûtent 500 F, combien coûtent 4 objets ?",["750 F","1000 F","1500 F","2000 F"],1]
+]
+},
+
+{
+title:"Repérage",
+text:`
+<h2>Droite graduée</h2>
+<p>Une droite graduée permet de placer et lire des nombres.</p>
+
+<h2>Plan</h2>
+<p>Dans un plan muni d'un repère, un point est identifié par deux coordonnées.</p>
+
+<div class="example">
+Le point A(2 ; 3) a pour abscisse 2 et pour ordonnée 3.
+</div>
+`,
+exercise:[
+["Dans A(2 ; 3), quelle est l'abscisse ?",["2","3","5","-2"],0]
+]
+}
+
+],
+
+/* ======================= 5e ======================= */
+
+"5e":[
+
+{
+title:"Multiples et diviseurs",
+text:`
+<h2>Définition</h2>
+<p>Un nombre est un multiple d'un autre lorsqu'il peut être obtenu en le multipliant par un entier.</p>
+
+<div class="example">
+24 est un multiple de 6 car 6 × 4 = 24.
+</div>
+
+<p>On dit aussi que 6 est un diviseur de 24.</p>
+`,
+exercise:[
+["24 est un multiple de 6 ?",["Oui","Non","Seulement 24h","Impossible"],0]
+]
+},
+
+{
+title:"Division euclidienne",
+text:`
+<h2>Principe</h2>
+<p>La division euclidienne d'un entier a par un entier b non nul s'écrit :</p>
+<div class="example">a = b × q + r avec 0 ≤ r &lt; b.</div>
+
+<p>q est le quotient et r le reste.</p>
+`,
+exercise:[
+["Dans 17 = 5 × 3 + 2, quel est le reste ?",["3","5","2","17"],2]
+]
+},
+
+{
+title:"Nombres premiers",
+text:`
+<h2>Définition</h2>
+<p>Un nombre premier est un entier naturel supérieur à 1 qui possède exactement deux diviseurs positifs : 1 et lui-même.</p>
+
+<div class="example">
+7 est premier car ses seuls diviseurs sont 1 et 7.
+</div>
+`,
+exercise:[
+["Lequel est premier ?",["9","12","13","15"],2]
+]
+},
+
+{
+title:"Fractions",
+text:`
+<h2>Addition</h2>
+<p>Pour additionner des fractions ayant le même dénominateur, on additionne les numérateurs.</p>
+
+<div class="example">
+2/7 + 3/7 = 5/7.
+</div>
+
+<p>Pour des dénominateurs différents, on cherche un dénominateur commun.</p>
+`,
+exercise:[
+["2/7 + 3/7 =",["5/7","5/14","6/7","1/7"],0]
+]
+},
+
+{
+title:"Nombres relatifs",
+text:`
+<h2>Définition</h2>
+<p>Les nombres relatifs comprennent les nombres positifs, les nombres négatifs et zéro.</p>
+
+<div class="example">
+-3 est négatif et +5 est positif.
+</div>
+
+<p>Sur une droite graduée, plus on va vers la droite, plus les nombres sont grands.</p>
+`,
+exercise:[
+["Lequel est le plus grand ?",["-5","-2","-8","-10"],1]
+]
+},
+
+{
+title:"Développement et factorisation",
+text:`
+<h2>Développer</h2>
+<p>Développer une expression consiste à supprimer les parenthèses en utilisant la distributivité.</p>
+
+<div class="example">
+3(x + 2) = 3x + 6.
+</div>
+
+<h2>Factoriser</h2>
+<p>Factoriser consiste à mettre un facteur commun en évidence.</p>
+`,
+exercise:[
+["3(x + 2) =",["3x+2","3x+6","x+6","6x"],1]
+]
+},
+
+{
+title:"Équations",
+text:`
+<h2>Principe</h2>
+<p>Résoudre une équation consiste à trouver la valeur de l'inconnue qui rend l'égalité vraie.</p>
+
+<div class="example">
+x + 3 = 8<br>
+Donc x = 5.
+</div>
+`,
+exercise:[
+["Si x + 3 = 8, x vaut :",["3","4","5","11"],2]
+]
+},
+
+{
+title:"Puissances",
+text:`
+<h2>Définition</h2>
+<p>Une puissance permet d'écrire un produit de facteurs identiques de manière courte.</p>
+
+<div class="example">
+2³ = 2 × 2 × 2 = 8.
+</div>
+`,
+exercise:[
+["2³ =",["6","8","9","12"],1]
+]
+}
+
+],
+
+/* ======================= 4e ======================= */
+
+"4e":[
+
+{
+title:"Nombres rationnels",
+text:`
+<h2>Définition</h2>
+<p>Un nombre rationnel peut s'écrire sous la forme a/b avec a et b entiers et b différent de zéro.</p>
+
+<div class="example">
+3/4, -2/5 et 7 sont des nombres rationnels.
+</div>
+`,
+exercise:[
+["Lequel est rationnel ?",["3/4","π seulement","√2 seulement","aucun"],0]
+]
+},
+
+{
+title:"Puissances",
+text:`
+<h2>Règles</h2>
+<p>Pour un nombre non nul a :</p>
+<div class="example">
+aᵐ × aⁿ = aᵐ⁺ⁿ<br>
+aᵐ / aⁿ = aᵐ⁻ⁿ
+</div>
+`,
+exercise:[
+["2² × 2³ =",["2⁵","2⁶","4⁵","2"],0]
+]
+},
+
+{
+title:"Calcul littéral",
+text:`
+<h2>Réduire</h2>
+<p>Réduire consiste à regrouper les termes de même nature.</p>
+
+<div class="example">
+3x + 2x = 5x.
+</div>
+
+<h2>Développer</h2>
+<p>On utilise la distributivité.</p>
+`,
+exercise:[
+["3x + 2x =",["5","5x","6x","x"],1]
+]
+},
+
+{
+title:"Équations du premier degré",
+text:`
+<h2>Principe</h2>
+<p>On cherche l'inconnue en effectuant les mêmes opérations aux deux membres.</p>
+
+<div class="example">
+2x + 4 = 10<br>
+2x = 6<br>
+x = 3.
+</div>
+`,
+exercise:[
+["2x + 4 = 10. x =",["2","3","4","7"],1]
+]
+},
+
+{
+title:"Inégalités",
+text:`
+<h2>Comparer</h2>
+<p>Une inégalité utilise des symboles comme &lt;, &gt;, ≤ ou ≥.</p>
+
+<p>Lorsqu'on multiplie ou divise une inégalité par un nombre négatif, le sens de l'inégalité change.</p>
+`,
+exercise:[
+["Quel symbole convient à 5 ... 8 ?",["&gt;","&lt;","=","≥"],1]
+]
+},
+
+{
+title:"Théorème de Pythagore",
+text:`
+<h2>Triangle rectangle</h2>
+<p>Dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés.</p>
+
+<div class="example">
+Si les côtés de l'angle droit mesurent 3 et 4, alors l'hypoténuse mesure 5 car 3² + 4² = 25.
+</div>
+`,
+exercise:[
+["Dans un triangle rectangle de côtés 3 et 4, l'hypoténuse vaut :",["5","6","7","12"],0]
+]
+},
+
+{
+title:"Proportionnalité et pourcentages",
+text:`
+<h2>Pourcentage</h2>
+<p>Calculer p % d'une quantité revient à multiplier cette quantité par p/100.</p>
+
+<div class="example">
+20 % de 150 = 150 × 20/100 = 30.
+</div>
+`,
+exercise:[
+["20 % de 150 =",["20","25","30","35"],2]
+]
+},
+
+{
+title:"Statistiques",
+text:`
+<h2>Moyenne</h2>
+<p>La moyenne d'une série est obtenue en additionnant les valeurs puis en divisant par le nombre de valeurs.</p>
+
+<div class="example">
+Moyenne de 10, 12 et 14 = 36/3 = 12.
+</div>
+`,
+exercise:[
+["Moyenne de 10, 12 et 14 ?",["10","11","12","14"],2]
+]
+}
+
+],
+
+/* ======================= 3e ======================= */
+
+"3e":[
+
+{
+title:"Calcul numérique",
+text:`
+<h2>Objectif</h2>
+<p>Maîtriser les opérations sur les nombres rationnels et réels.</p>
+
+<p>Il faut savoir utiliser les fractions, les puissances, les racines carrées et les priorités opératoires.</p>
+`,
+exercise:[
+["√49 =",["6","7","8","9"],1]
+]
+},
+
+{
+title:"Racine carrée",
+text:`
+<h2>Définition</h2>
+<p>La racine carrée de a, notée √a, est le nombre positif dont le carré vaut a.</p>
+
+<div class="example">
+√25 = 5 car 5² = 25.
+</div>
+`,
+exercise:[
+["√81 =",["7","8","9","10"],2]
+]
+},
+
+{
+title:"Théorème de Thalès",
+text:`
+<h2>Principe</h2>
+<p>Lorsque deux droites sécantes sont coupées par des droites parallèles, les longueurs correspondantes sont proportionnelles.</p>
+
+<p>Le théorème permet notamment de calculer des longueurs inconnues.</p>
+`,
+exercise:[
+["Dans une configuration de Thalès, les longueurs correspondantes sont :",["égales","proportionnelles","toujours nulles","opposées"],1]
+]
+},
+
+{
+title:"Trigonométrie",
+text:`
+<h2>Dans un triangle rectangle</h2>
+<p>Pour un angle aigu :</p>
+
+<div class="example">
+sin(angle) = côté opposé / hypoténuse<br>
+cos(angle) = côté adjacent / hypoténuse<br>
+tan(angle) = côté opposé / côté adjacent
+</div>
+`,
+exercise:[
+["cos(θ) correspond à :",["opposé/hypoténuse","adjacent/hypoténuse","opposé/adjacent","hypoténuse/adjacent"],1]
+]
+},
+
+{
+title:"Fonctions",
+text:`
+<h2>Définition</h2>
+<p>Une fonction associe à un nombre x un autre nombre appelé image.</p>
+
+<div class="example">
+Pour f(x)=2x+1, l'image de 3 est f(3)=7.
+</div>
+`,
+exercise:[
+["Si f(x)=2x+1, f(3) =",["5","6","7","8"],2]
+]
+},
+
+{
+title:"Équations et systèmes",
+text:`
+<h2>Équation</h2>
+<p>Une équation permet de rechercher une inconnue.</p>
+
+<h2>Système</h2>
+<p>Un système regroupe plusieurs équations dont les solutions doivent satisfaire toutes les équations.</p>
+`,
+exercise:[
+["Si x + 2 = 7, x =",["3","4","5","6"],2]
+]
+},
+
+{
+title:"Statistiques",
+text:`
+<h2>Vocabulaire</h2>
+<p>Une série statistique contient des valeurs observées.</p>
+
+<p>On peut étudier la moyenne, la médiane, les effectifs et les fréquences.</p>
+`,
+exercise:[
+["La fréquence est généralement exprimée comme :",["effectif/total","total/effectif","somme uniquement","différence"],0]
+]
+},
+
+{
+title:"Probabilités",
+text:`
+<h2>Principe</h2>
+<p>Une probabilité mesure la possibilité qu'un événement se produise.</p>
+
+<p>Elle est comprise entre 0 et 1.</p>
+
+<div class="example">
+Un événement impossible a une probabilité 0 et un événement certain a une probabilité 1.
+</div>
+`,
+exercise:[
+["Une probabilité est comprise entre :",["-1 et 1","0 et 1","1 et 2","0 et 1000"],1]
+]
+}
+
+],
+
+/* ======================= 2nde ======================= */
+
+"2nde":[
+
+{
+title:"Ensembles de nombres",
+text:`
+<h2>Les grands ensembles</h2>
+<p>On rencontre notamment les entiers naturels, les entiers relatifs, les rationnels et les réels.</p>
+
+<p>Chaque ensemble élargit les possibilités de calcul.</p>
+`,
+exercise:[
+["Lequel appartient aux réels ?",["3","-2","1/4","tous les trois"],3]
+]
+},
+
+{
+title:"Calcul algébrique",
+text:`
+<h2>Expressions</h2>
+<p>Le calcul algébrique utilise des lettres pour représenter des nombres.</p>
+
+<div class="example">
+(x + 2)(x + 3) = x² + 5x + 6.
+</div>
+`,
+exercise:[
+["(x+2)(x+3) contient comme terme constant :",["2","3","5","6"],3]
+]
+},
+
+{
+title:"Fonctions",
+text:`
+<h2>Fonction</h2>
+<p>Une fonction associe à chaque nombre d'un ensemble un unique nombre appelé image.</p>
+
+<p>On étudie son domaine de définition, ses variations et sa représentation graphique.</p>
+`,
+exercise:[
+["Une fonction associe une entrée à :",["une seule sortie","toujours deux sorties","aucune sortie","une équation uniquement"],0]
+]
+},
+
+{
+title:"Fonction affine",
+text:`
+<h2>Forme</h2>
+<p>Une fonction affine s'écrit f(x)=ax+b.</p>
+
+<p>Sa représentation graphique est une droite.</p>
+`,
+exercise:[
+["Une fonction affine s'écrit :",["ax²+b","ax+b","a/x","x/a²"],1]
+]
+},
+
+{
+title:"Vecteurs",
+text:`
+<h2>Définition</h2>
+<p>Un vecteur possède une direction, un sens et une longueur.</p>
+
+<p>Les vecteurs permettent de décrire des déplacements et des relations géométriques.</p>
+`,
+exercise:[
+["Un vecteur possède notamment :",["une direction","une couleur obligatoire","un volume","une masse"],0]
+]
+},
+
+{
+title:"Statistiques",
+text:`
+<h2>Série statistique</h2>
+<p>On utilise les effectifs, fréquences, moyenne, médiane et quartiles pour décrire une série.</p>
+`,
+exercise:[
+["La médiane partage une série ordonnée en :",["deux parties","trois parties","quatre parties égales","dix parties"],0]
+]
+},
+
+{
+title:"Probabilités",
+text:`
+<h2>Événements</h2>
+<p>On peut calculer la probabilité d'un événement à partir des issues possibles lorsque celles-ci sont équiprobables.</p>
+
+<div class="example">
+P(A) = nombre de cas favorables / nombre de cas possibles.
+</div>
+`,
+exercise:[
+["Une probabilité ne peut pas être :",["0","0,5","1","2"],3]
+]
+}
+
+],
+
+/* ======================= 1ère ======================= */
+
+"1ère":[
+
+{
+title:"Suites numériques",
+text:`
+<h2>Définition</h2>
+<p>Une suite est une liste ordonnée de nombres notés généralement uₙ.</p>
+
+<h2>Suite arithmétique</h2>
+<p>Une suite arithmétique possède une différence constante entre deux termes consécutifs.</p>
+`,
+exercise:[
+["Dans une suite arithmétique, la différence entre deux termes consécutifs est :",["constante","toujours nulle","toujours négative","variable obligatoirement"],0]
+]
+},
+
+{
+title:"Dérivation",
+text:`
+<h2>Nombre dérivé</h2>
+<p>La dérivée permet notamment d'étudier les variations d'une fonction.</p>
+
+<div class="example">
+Si f(x)=x², alors f'(x)=2x.
+</div>
+`,
+exercise:[
+["La dérivée de x² est :",["x","2x","x²","2"],1]
+]
+},
+
+{
+title:"Étude de fonctions",
+text:`
+<h2>Variations</h2>
+<p>La dérivée permet de déterminer où une fonction est croissante ou décroissante.</p>
+
+<p>Si f'(x) est positive sur un intervalle, f est croissante sur cet intervalle.</p>
+`,
+exercise:[
+["Si f'(x)>0 sur un intervalle, f est :",["décroissante","constante","croissante","nulle"],2]
+]
+},
+
+{
+title:"Exponentielle",
+text:`
+<h2>Fonction exponentielle</h2>
+<p>La fonction exponentielle est notée exp(x). Elle vérifie notamment exp(a+b)=exp(a)exp(b).</p>
+`,
+exercise:[
+["exp(0) =",["0","1","-1","exp"],1]
+]
+},
+
+{
+title:"Logarithme",
+text:`
+<h2>Logarithme népérien</h2>
+<p>Le logarithme népérien est défini pour les nombres strictement positifs.</p>
+
+<div class="example">
+ln(1)=0.
+</div>
+`,
+exercise:[
+["ln(1) =",["-1","0","1","10"],1]
+]
+},
+
+{
+title:"Probabilités",
+text:`
+<h2>Variables aléatoires</h2>
+<p>Une variable aléatoire associe un nombre réel à chaque issue d'une expérience aléatoire.</p>
+
+<p>On peut étudier son espérance, sa variance et son écart-type.</p>
+`,
+exercise:[
+["Une variable aléatoire associe une issue à :",["un réel","une couleur uniquement","une droite","une figure"],0]
+]
+},
+
+{
+title:"Géométrie dans l'espace",
+text:`
+<h2>Repérage</h2>
+<p>Dans l'espace, un point peut être repéré par trois coordonnées.</p>
+
+<p>On peut également étudier les droites, plans, distances et vecteurs.</p>
+`,
+exercise:[
+["Dans l'espace, un point est généralement repéré par :",["1 coordonnée","2 coordonnées","3 coordonnées","4 coordonnées"],2]
+]
+}
+
+],
+
+/* ======================= TERMINALE ======================= */
+
+"Terminale":[
+
+{
+title:"Limites de fonctions",
+text:`
+<h2>Idée</h2>
+<p>La limite décrit le comportement d'une fonction lorsque la variable se rapproche d'une valeur ou devient très grande.</p>
+
+<p>Les limites sont essentielles pour étudier les fonctions et leurs courbes.</p>
+`,
+exercise:[
+["Une limite décrit notamment le comportement d'une fonction :",["près d'une valeur","uniquement à zéro","uniquement pour les entiers","jamais"],0]
+]
+},
+
+{
+title:"Continuité",
+text:`
+<h2>Fonction continue</h2>
+<p>Une fonction est continue sur un intervalle lorsqu'elle ne présente pas de rupture sur cet intervalle.</p>
+
+<p>La continuité joue un rôle important dans plusieurs théorèmes d'analyse.</p>
+`,
+exercise:[
+["Une fonction continue présente sur son intervalle :",["une rupture obligatoire","pas de rupture","toujours une droite","toujours un maximum"],1]
+]
+},
+
+{
+title:"Dérivation et études de fonctions",
+text:`
+<h2>Dérivée</h2>
+<p>La dérivée permet d'étudier les variations d'une fonction et de rechercher certains extrema.</p>
+
+<div class="example">
+Si f'(x)>0 sur un intervalle, f est croissante sur cet intervalle.
+</div>
+`,
+exercise:[
+["Si f'(x)<0 sur un intervalle, f est :",["croissante","décroissante","constante obligatoirement","positive"],1]
+]
+},
+
+{
+title:"Logarithme népérien",
+text:`
+<h2>Fonction ln</h2>
+<p>Le logarithme népérien est défini sur les réels strictement positifs.</p>
+
+<div class="example">
+ln(ab)=ln(a)+ln(b), pour a et b strictement positifs.
+</div>
+`,
+exercise:[
+["Le domaine de ln est :",["R","R*","les réels strictement positifs","les négatifs uniquement"],2]
+]
+},
+
+{
+title:"Fonction exponentielle",
+text:`
+<h2>Propriétés</h2>
+<p>La fonction exponentielle est positive sur R et vérifie exp(x+y)=exp(x)exp(y).</p>
+
+<div class="example">
+exp(0)=1.
+</div>
+`,
+exercise:[
+["exp(0) =",["0","1","-1","2"],1]
+]
+},
+
+{
+title:"Probabilités",
+text:`
+<h2>Probabilité</h2>
+<p>Les probabilités permettent de modéliser des phénomènes aléatoires.</p>
+
+<p>On peut étudier les lois de probabilité et différentes variables aléatoires.</p>
+`,
+exercise:[
+["Une probabilité est toujours :",["négative","entre 0 et 1","supérieure à 2","égale à 2"],1]
+]
+},
+
+{
+title:"Équations différentielles",
+text:`
+<h2>Principe</h2>
+<p>Une équation différentielle contient une fonction inconnue et une ou plusieurs de ses dérivées.</p>
+
+<div class="example">
+Une équation simple peut être y' = ay.
+</div>
+`,
+exercise:[
+["Une équation différentielle contient notamment :",["une dérivée","seulement des nombres","aucune fonction","un triangle"],0]
+]
+},
+
+{
+title:"Intégrales",
+text:`
+<h2>Intégration</h2>
+<p>L'intégrale permet notamment de calculer des aires orientées et constitue une opération liée à la dérivation.</p>
+
+<div class="example">
+Si F est une primitive de f, alors ∫aᵇ f(x)dx = F(b)-F(a).
+</div>
+`,
+exercise:[
+["Une primitive F de f vérifie :",["F'=f","F=f²","F'=0 toujours","F=1"],0]
+]
+},
+
+{
+title:"Nombres complexes",
+text:`
+<h2>Définition</h2>
+<p>Un nombre complexe peut s'écrire z=a+ib, où a et b sont réels et i²=-1.</p>
+
+<div class="example">
+Pour z=3+2i, la partie réelle est 3 et la partie imaginaire est 2.
+</div>
+`,
+exercise:[
+["Dans z=3+2i, la partie réelle est :",["2","3","i","5"],1]
+]
+},
+
+{
+title:"Trigonométrie",
+text:`
+<h2>Formules</h2>
+<p>Les fonctions sinus, cosinus et tangente permettent de relier angles et longueurs.</p>
+
+<p>Les formules trigonométriques sont également utilisées dans l'étude des fonctions et des nombres complexes.</p>
+`,
+exercise:[
+["sin²(x)+cos²(x) =",["0","1","2","x"],1]
+]
+}
+
+]
+
+};
+
+
+/* ============================================================
+   DONNÉES DE L'APPLICATION
+============================================================ */
+
+let userData = JSON.parse(
+  localStorage.getItem("mathquestUser")
+) || {
+  prenom:"",
+  nom:"",
+  age:"",
+  avatar:"👦",
+  classe:"",
+  xp:0,
+  streak:0,
+  completedLessons:[],
+  completedExercises:[],
+  workSaved:false
+};
+
+let selectedClass = "";
+let selectedLesson = null;
+let selectedExerciseIndex = 0;
+let currentExercises = [];
+
+let speech = null;
+
+
+/* ============================================================
+   UTILITAIRES
+============================================================ */
+
+function saveData(){
+  localStorage.setItem(
+    "mathquestUser",
+    JSON.stringify(userData)
+  );
+}
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(screen=>{
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function showClassScreen(){
+  renderClasses();
+  showScreen("classScreen");
+}
+
+function renderClasses(){
+
+  const grid = document.getElementById("classGrid");
+
+  grid.innerHTML = classes.map(classe=>`
+
+    <div class="class-card" onclick="selectClass('${classe}')">
+
+      <div class="class-number">${classe}</div>
+
+      <div class="class-desc">
+        Cours + exercices + audio
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+function selectClass(classe){
+
+  selectedClass = classe;
+
+  document.getElementById("prenom").value =
+    userData.prenom || "";
+
+  document.getElementById("nom").value =
+    userData.nom || "";
+
+  document.getElementById("age").value =
+    userData.age || "";
+
+  chooseAvatar(userData.avatar || "👦");
+
+  showScreen("profileScreen");
+}
+
+function chooseAvatar(avatar){
+
+  userData.avatar = avatar;
+
+  document.getElementById("boyAvatar")
+    .classList.toggle("selected",avatar==="👦");
+
+  document.getElementById("girlAvatar")
+    .classList.toggle("selected",avatar==="👧");
+}
+
+function createProfile(){
+
+  const prenom =
+    document.getElementById("prenom").value.trim();
+
+  const nom =
+    document.getElementById("nom").value.trim();
+
+  const age =
+    document.getElementById("age").value.trim();
+
+  if(!prenom){
+    alert("Entre ton prénom.");
+    return;
+  }
+
+  if(!nom){
+    alert("Entre ton nom.");
+    return;
+  }
+
+  userData.prenom = prenom;
+  userData.nom = nom;
+  userData.age = age;
+  userData.classe = selectedClass;
+
+  saveData();
+
+  updateHome();
+
+  showScreen("homeScreen");
+}
+
+
+/* ============================================================
+   HOME
+============================================================ */
+
+function updateHome(){
+
+  const classe =
+    userData.classe || "6e";
+
+  document.getElementById("welcomeName")
+    .textContent = userData.prenom || "élève";
+
+  document.getElementById("homeClass")
+    .textContent = classe;
+
+  document.getElementById("homeXP")
+    .textContent = userData.xp;
+
+  document.getElementById("topXP")
+    .textContent = userData.xp;
+
+  document.getElementById("homeStreak")
+    .textContent = userData.streak;
+
+  document.getElementById("topStreak")
+    .textContent = userData.streak;
+
+  const list =
+    courses[classe] || [];
+
+  const completed =
+    list.filter((_,index)=>
+      userData.completedLessons.includes(
+        classe + "-" + index
+      )
+    ).length;
+
+  const percent =
+    list.length ?
+    Math.round(completed/list.length*100) :
+    0;
+
+  document.getElementById("homeProgress")
+    .textContent = percent + "%";
+}
+
+function showHome(){
+  updateHome();
+  showScreen("homeScreen");
+}
+
+
+/* ============================================================
+   COURS
+============================================================ */
+
+function showCourses(){
+
+  const classe =
+    userData.classe || "6e";
+
+  document.getElementById("coursesClass")
+    .textContent = classe;
+
+  const list =
+    courses[classe] || [];
+
+  const container =
+    document.getElementById("courseList");
+
+  container.innerHTML =
+    list.map((course,index)=>{
+
+      const completed =
+        userData.completedLessons.includes(
+          classe + "-" + index
+        );
+
+      return `
+
+        <div class="course-card">
+
+          <h3>
+            ${completed ? "✅" : "📘"}
+            ${index+1}. ${course.title}
+          </h3>
+
+          <p>
+            Cours de ${classe} •
+            Explication + écoute + exercice
+          </p>
+
+          <button
+            class="small-btn"
+            onclick="openLesson(${index})"
+          >
+            📖 Ouvrir le cours
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+  showScreen("coursesScreen");
+}
+
+function openLesson(index){
+
+  const classe =
+    userData.classe || "6e";
+
+  selectedLesson = index;
+
+  const course =
+    courses[classe][index];
+
+  document.getElementById("lessonTitle")
+    .textContent = course.title;
+
+  document.getElementById("lessonMeta")
+    .textContent =
+      "Mathématiques • " +
+      classe +
+      " • Leçon " +
+      (index+1);
+
+  document.getElementById("lessonContent")
+    .innerHTML = course.text;
+
+  stopSpeech();
+
+  document.getElementById("audioStatus")
+    .textContent =
+      "Prêt à lire le cours.";
+
+  showScreen("lessonScreen");
+}
+
+
+/* ============================================================
+   AUDIO / SYNTHÈSE VOCALE
+============================================================ */
+
+function getLessonPlainText(){
+
+  const element =
+    document.getElementById("lessonContent");
+
+  return element.innerText ||
+         element.textContent ||
+         "";
+}
+
+function speakLesson(){
+
+  if(!("speechSynthesis" in window)){
+    alert(
+      "La lecture vocale n'est pas disponible sur ce navigateur."
+    );
+    return;
+  }
+
+  stopSpeech();
+
+  speech =
+    new SpeechSynthesisUtterance(
+      getLessonPlainText()
+    );
+
+  speech.lang = "fr-FR";
+  speech.rate = 0.9;
+  speech.pitch = 1;
+
+  speech.onstart = function(){
+    document.getElementById("audioStatus")
+      .textContent =
+      "🔊 Matho lit le cours...";
+  };
+
+  speech.onend = function(){
+    document.getElementById("audioStatus")
+      .textContent =
+      "✅ Lecture terminée.";
+  };
+
+  speech.onerror = function(){
+    document.getElementById("audioStatus")
+      .textContent =
+      "⚠️ La lecture vocale a rencontré un problème.";
+  };
+
+  window.speechSynthesis.speak(speech);
+}
+
+function pauseSpeech(){
+
+  if(
+    "speechSynthesis" in window &&
+    window.speechSynthesis.speaking
+  ){
+
+    window.speechSynthesis.pause();
+
+    document.getElementById("audioStatus")
+      .textContent =
+      "⏸️ Lecture en pause.";
+  }
+}
+
+function resumeSpeech(){
+
+  if(
+    "speechSynthesis" in window &&
+    window.speechSynthesis.paused
+  ){
+
+    window.speechSynthesis.resume();
+
+    document.getElementById("audioStatus")
+      .textContent =
+      "▶️ Lecture reprise.";
+  }
+}
+
+function stopSpeech(){
+
+  if("speechSynthesis" in window){
+
+    window.speechSynthesis.cancel();
+
+    const status =
+      document.getElementById("audioStatus");
+
+    if(status){
+      status.textContent =
+        "⏹️ Lecture arrêtée.";
+    }
+  }
+}
+
+
+/* ============================================================
+   FIN DE COURS
+============================================================ */
+
+function completeLesson(){
+
+  const classe =
+    userData.classe || "6e";
+
+  const id =
+    classe + "-" + selectedLesson;
+
+  if(!userData.completedLessons.includes(id)){
+
+    userData.completedLessons.push(id);
+
+    userData.xp += 10;
+
+    userData.streak += 1;
+
+    saveData();
+
+    alert(
+      "🎉 Cours terminé ! +10 XP"
+    );
+
+  }else{
+
+    alert(
+      "Ce cours est déjà terminé."
+    );
+  }
+
+  updateHome();
+  showCourses();
+}
+
+
+/* ============================================================
+   EXERCICES
+============================================================ */
+
+function showExercises(){
+
+  const classe =
+    userData.classe || "6e";
+
+  currentExercises =
+    courses[classe] || [];
+
+  selectedExerciseIndex = 0;
+
+  loadExercise();
+
+  showScreen("exerciseScreen");
+}
+
+function loadExercise(){
+
+  const classe =
+    userData.classe || "6e";
+
+  if(selectedExerciseIndex >= currentExercises.length){
+
+    alert(
+      "🎉 Bravo ! Tu as terminé les exercices disponibles."
+    );
+
+    showHome();
+
+    return;
+  }
+
+  const course =
+    currentExercises[selectedExerciseIndex];
+
+  const exercise =
+    course.exercise &&
+    course.exercise[0];
+
+  if(!exercise){
+
+    selectedExerciseIndex++;
+
+    loadExercise();
+
+    return;
+  }
+
+  document.getElementById("exerciseTitle")
+    .textContent =
+      "✏️ " + course.title;
+
+  document.getElementById("exerciseQuestion")
+    .textContent =
+      exercise[0];
+
+  const choices =
+    document.getElementById("choices");
+
+  choices.innerHTML =
+    exercise[1].map((answer,index)=>`
+
+      <button
+        class="choice"
+        onclick="answerExercise(${index})"
+      >
+        ${String.fromCharCode(65+index)}. ${answer}
+      </button>
+
+    `).join("");
+
+  document.getElementById("feedback")
+    .innerHTML = "";
+
+  document.getElementById("nextExerciseBtn")
+    .style.display = "none";
+}
+
+function answerExercise(answerIndex){
+
+  const course =
+    currentExercises[selectedExerciseIndex];
+
+  const exercise =
+    course.exercise[0];
+
+  const correct =
+    exercise[2];
+
+  const buttons =
+    document.querySelectorAll(".choice");
+
+  buttons.forEach(button=>{
+    button.disabled = true;
+  });
+
+  const feedback =
+    document.getElementById("feedback");
+
+  if(answerIndex === correct){
+
+    feedback.className =
+      "feedback correct";
+
+    feedback.innerHTML =
+      "🎉 Bonne réponse ! +5 XP";
+
+    const exerciseId =
+      userData.classe +
+      "-" +
+      selectedExerciseIndex;
+
+    if(!userData.completedExercises.includes(exerciseId)){
+
+      userData.completedExercises.push(
+        exerciseId
+      );
+
+      userData.xp += 5;
+
+      userData.streak += 1;
+
+      saveData();
+    }
+
+  }else{
+
+    feedback.className =
+      "feedback wrong";
+
+    feedback.innerHTML =
+      "Pas grave ! Relis le cours et réessaie. 💪";
+  }
+
+  document.getElementById("nextExerciseBtn")
+    .style.display = "block";
+
+  updateHome();
+}
+
+function nextExercise(){
+
+  selectedExerciseIndex++;
+
+  loadExercise();
+}
+
+
+/* ============================================================
+   PROGRESSION
+============================================================ */
+
+function showProgress(){
+
+  const classe =
+    userData.classe || "6e";
+
+  const list =
+    courses[classe] || [];
+
+  const completed =
+    list.filter((_,index)=>
+      userData.completedLessons.includes(
+        classe + "-" + index
+      )
+    ).length;
+
+  const percent =
+    list.length ?
+    Math.round(completed/list.length*100) :
+    0;
+
+  document.getElementById("progressXP")
+    .textContent = userData.xp;
+
+  document.getElementById("progressPercent")
+    .textContent = percent + "%";
+
+  document.getElementById("progressBar")
+    .style.width = percent + "%";
+
+  renderBadges();
+
+  showScreen("progressScreen");
+}
+
+function showRewards(){
+  showProgress();
+}
+
+function renderBadges(){
+
+  const badges = [
+
+    {
+      icon:"🌱",
+      title:"Premier pas",
+      description:"Terminer ton premier cours.",
+      unlocked:
+        userData.completedLessons.length >= 1
+    },
+
+    {
+      icon:"⭐",
+      title:"50 XP",
+      description:"Gagner 50 XP.",
+      unlocked:
+        userData.xp >= 50
+    },
+
+    {
+      icon:"🔥",
+      title:"Série",
+      description:"Atteindre 5 séries.",
+      unlocked:
+        userData.streak >= 5
+    },
+
+    {
+      icon:"📚",
+      title:"Apprenti",
+      description:"Terminer 5 cours.",
+      unlocked:
+        userData.completedLessons.length >= 5
+    },
+
+    {
+      icon:"🏆",
+      title:"Champion",
+      description:"Gagner 100 XP.",
+      unlocked:
+        userData.xp >= 100
+    },
+
+    {
+      icon:"🚀",
+      title:"MathQuest",
+      description:"Atteindre 200 XP.",
+      unlocked:
+        userData.xp >= 200
+    }
+
+  ];
+
+  document.getElementById("badges")
+    .innerHTML =
+      badges.map(badge=>`
+
+        <div class="badge ${badge.unlocked ? "" : "locked"}">
+
+          <div class="badge-icon">
+            ${badge.icon}
+          </div>
+
+          <strong>
+            ${badge.title}
+          </strong>
+
+          <p style="margin-top:7px;color:#667085;font-size:13px">
+            ${badge.description}
+          </p>
+
+        </div>
+
+      `).join("");
+}
+
+
+/* ============================================================
+   MONTRER MON TRAVAIL
+============================================================ */
+
+function showWork(){
+  showScreen("workScreen");
+}
+
+function saveWork(){
+
+  const text =
+    document.getElementById("workText").value.trim();
+
+  const file =
+    document.getElementById("workPhoto").files[0];
+
+  if(!file && !text){
+
+    alert(
+      "Ajoute une photo ou explique ton raisonnement."
+    );
+
+    return;
+  }
+
+  userData.workSaved = true;
+
+  userData.xp += 5;
+
+  saveData();
+
+  document.getElementById("workMessage")
+    .textContent =
+      "✅ Ton travail a été enregistré sur cet appareil. +5 XP";
+
+  updateHome();
+}
+
+
+/* ============================================================
+   PROFIL
+============================================================ */
+
+function showProfile(){
+
+  document.getElementById("profileAvatar")
+    .textContent = userData.avatar || "👦";
+
+  document.getElementById("profilePrenom")
+    .textContent = userData.prenom || "";
+
+  document.getElementById("profileNom")
+    .textContent = userData.nom || "";
+
+  document.getElementById("profileAge")
+    .textContent = userData.age || "";
+
+  document.getElementById("profileClasse")
+    .textContent = userData.classe || "";
+
+  showScreen("profileViewScreen");
+}
+
+function changeClass(){
+
+  renderClasses();
+
+  showScreen("classScreen");
+}
+
+function resetApp(){
+
+  const confirmReset =
+    confirm(
+      "Veux-tu vraiment supprimer ta progression sur cet appareil ?"
+    );
+
+  if(!confirmReset) return;
+
+  localStorage.removeItem(
+    "mathquestUser"
+  );
+
+  location.reload();
+}
+
+
+/* ============================================================
+   INITIALISATION
+============================================================ */
+
+function initializeApp(){
+
+  /*
+    Si aucun profil n'existe :
+    écran de départ.
+
+    Si un profil existe :
+    accueil directement.
+  */
+
+  if(userData.classe){
+
+    updateHome();
+
+    showScreen("homeScreen");
+
+  }else{
+
+    showScreen("startScreen");
+  }
+}
+
+initializeApp();
+
+</script>
+
+</body>
+</html>
